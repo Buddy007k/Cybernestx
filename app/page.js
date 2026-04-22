@@ -21,7 +21,7 @@ export default function Home() {
             CyberNestX
             <br />
             <span className="gradient-text">
-              Innovate. Build. Scale.
+              Innovate. Build. Scale
             </span>
           </h1>
 
