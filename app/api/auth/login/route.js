@@ -26,10 +26,11 @@ export async function POST(req) {
   );
 
   cookies().set("token", token, {
-    httpOnly: true,
-    secure: true,
-    path: "/",
-  });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  path: "/",
+});
 
   return Response.json({ success: true, role: user.role });
 }
