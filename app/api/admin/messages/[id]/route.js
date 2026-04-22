@@ -1,5 +1,5 @@
 import { connectDB } from "@/lib/db";
-import Contact from "@/models/contact";
+import Contact from "@/models/Contact";
 
 export async function DELETE(req, { params }) {
   await connectDB();
