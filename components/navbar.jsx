@@ -15,41 +15,55 @@ export default function Navbar() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
-  return (
-    <nav className="fixed w-full z-50 backdrop-blur-md 
-    bg-white/70 dark:bg-black/60 
-    border-b border-gray-200 dark:border-white/10">
+  const isDark = theme === "dark";
 
+  return (
+    <nav
+      className={`fixed w-full z-50 backdrop-blur-xl border-b transition-all duration-300
+      ${
+        isDark
+          ? "bg-black/60 border-white/10"
+          : "bg-white/50 border-gray-200/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-        {/* 🖼 LOGO (CLICKABLE) */}
-        <Link href="/" className="flex items-center cursor-pointer">
-          {theme === "dark" ? (
-            <Image
-              src="/assets/CyberNestX-logo-white.png"
-              alt="CyberNestX Logo"
-              width={125}
-              height={40}
-              priority
-            />
-          ) : (
-            <Image
-              src="/assets/CyberNestX-logo-black.png"
-              alt="CyberNestX Logo"
-              width={125}
-              height={40}
-              priority
-            />
-          )}
+        {/* 🖼 LOGO */}
+        <Link href="/" className="flex items-center">
+          <Image
+            src={
+              isDark
+                ? "/assets/CyberNestX-logo-white.png"
+                : "/assets/CyberNestX-logo-black.png"
+            }
+            alt="CyberNestX Logo"
+            width={125}
+            height={40}
+            priority
+          />
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-6 items-center text-strong">
-          <Link href="/" className="hover:text-indigo-600 transition">Home</Link>
-          <Link href="/about" className="hover:text-indigo-600 transition">About</Link>
-          <Link href="/services" className="hover:text-indigo-600 transition">Services</Link>
-          <Link href="/portfolio" className="hover:text-indigo-600 transition">Portfolio</Link>
-          <Link href="/contact" className="hover:text-indigo-600 transition">Contact</Link>
+        <div
+          className={`hidden md:flex gap-6 items-center font-medium ${
+            isDark ? "text-white" : "text-gray-900"
+          }`}
+        >
+          <Link href="/" className="hover:text-indigo-600 transition">
+            Home
+          </Link>
+          <Link href="/about" className="hover:text-indigo-600 transition">
+            About
+          </Link>
+          <Link href="/services" className="hover:text-indigo-600 transition">
+            Services
+          </Link>
+          <Link href="/portfolio" className="hover:text-indigo-600 transition">
+            Portfolio
+          </Link>
+          <Link href="/contact" className="hover:text-indigo-600 transition">
+            Contact
+          </Link>
 
           <Button href="/login" variant="outline">
             Login
@@ -61,17 +75,18 @@ export default function Navbar() {
 
           {/* Theme Toggle */}
           <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="text-strong hover:scale-110 transition"
+            onClick={() => setTheme(isDark ? "light" : "dark")}
+            className={`hover:scale-110 transition ${
+              isDark ? "text-white" : "text-gray-900"
+            }`}
           >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
           {/* Mobile Menu */}
           <div className="md:hidden">
             <MobileSidebar />
           </div>
-
         </div>
       </div>
     </nav>
