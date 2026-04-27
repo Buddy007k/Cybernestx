@@ -41,8 +41,8 @@ export default function Hero() {
       {/* 🎨 GRADIENT */}
       <div
         className={`absolute inset-0 -z-10 ${isDark
-            ? "bg-gradient-to-tr from-black/80 via-transparent to-black/60"
-            : "bg-transparent"
+          ? "bg-gradient-to-tr from-black/80 via-transparent to-black/60"
+          : "bg-transparent"
           }`}
       />
 
@@ -62,21 +62,27 @@ export default function Hero() {
       <div className="max-w-4xl px-6 space-y-6">
 
         <p
-          className={`text-sm tracking-widest uppercase ${isDark ? "text-gray-300" : "text-gray-600"
+          className={`inline-block text-sm tracking-widest uppercase px-4 py-1 rounded-full ${isDark
+            ? "text-gray-300"
+            : "text-gray-800 bg-white/40 backdrop-blur-sm border border-white/60"
             }`}
         >
           Your Digital Success, Our Mission
         </p>
 
         <h1
-          className={`text-4xl md:text-6xl font-extrabold leading-tight ${isDark ? "text-white" : "text-black"
+          className={`text-4xl md:text-6xl font-extrabold leading-tight ${isDark
+            ? "text-white"
+            : "text-black bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg inline-block"
             }`}
         >
           Transforming Businesses with Smart Digital & E-commerce Solutions
         </h1>
 
         <p
-          className={`text-lg max-w-2xl mx-auto ${isDark ? "text-gray-300" : "text-gray-600"
+          className={`text-lg max-w-2xl mx-auto ${isDark
+              ? "text-gray-300"
+              : "text-gray-800 bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg inline-block"
             }`}
         >
           From powerful websites to high-performing marketplace stores,
@@ -95,8 +101,8 @@ export default function Hero() {
       {/* 🔽 TECH STRIP */}
       <div
         className={`absolute bottom-0 w-full overflow-hidden backdrop-blur-md py-4 ${isDark
-            ? "bg-black/80 text-gray-400"
-            : "bg-white/70 text-gray-700"
+          ? "bg-black/80 text-gray-400"
+          : "bg-white/70 text-gray-700"
           }`}
       >
 

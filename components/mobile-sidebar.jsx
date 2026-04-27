@@ -17,10 +17,8 @@ export default function MobileSidebar() {
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
     { name: "Services", path: "/services" },
-    { name: "Portfolio", path: "/portfolio" },
     { name: "Contact", path: "/contact" },
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Login", path: "/login" },
+    // { name: "Login", path: "/login" },
   ];
 
   const handleNav = (path) => {

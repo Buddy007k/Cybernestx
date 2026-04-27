@@ -58,16 +58,10 @@ export default function Navbar() {
           <Link href="/services" className="hover:text-indigo-600 transition">
             Services
           </Link>
-          <Link href="/portfolio" className="hover:text-indigo-600 transition">
-            Portfolio
-          </Link>
-          <Link href="/contact" className="hover:text-indigo-600 transition">
-            Contact
-          </Link>
 
-          <Button href="/login" variant="outline">
+          {/* <Button href="/login" variant="outline">
             Login
-          </Button>
+          </Button> */}
         </div>
 
         {/* Right Side */}
@@ -82,6 +76,9 @@ export default function Navbar() {
           >
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+          <Button href="/contact" variant="outline" className="hidden md:inline-flex">
+            Contact
+          </Button> 
 
           {/* Mobile Menu */}
           <div className="md:hidden">
