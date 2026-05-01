@@ -42,7 +42,7 @@ export default function HowWeWork() {
   ];
 
   return (
-    <section className="py-15 px-6">
+    <section className="py-20 px-6">
       <div className="max-w-7xl mx-auto space-y-20">
 
         {/* HEADING */}

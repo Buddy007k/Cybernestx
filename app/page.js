@@ -9,6 +9,7 @@ import Growth from "@/components/growth";
 import WhyUs from "@/components/why-us";
 import HowWeWork from "@/components/how-we-work";
 import Results from "@/components/results";
+import Reviews from "@/components/reviews";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       <ServicesPage />
       <Growth />
       <WhyUs />
+      <Reviews />
       <HowWeWork />
       <Results />
       <Footer />

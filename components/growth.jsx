@@ -15,7 +15,7 @@ export default function Growth() {
   ];
 
   return (
-    <section className="py-15 px-6">
+    <section className="py-20 px-6">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
         {/* LEFT CONTENT */}

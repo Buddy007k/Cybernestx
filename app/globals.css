@@ -64,7 +64,9 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* MARQUEE */
+/* ============================= */
+/* EXISTING MARQUEE (DO NOT TOUCH) */
+/* ============================= */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -78,4 +80,74 @@ body {
   display: flex;
   width: max-content;
   animation: marquee 20s linear infinite;
+}
+
+/* ============================= */
+/* 🔥 NEW: REVIEWS MARQUEE UPGRADE */
+/* ============================= */
+
+/* RIGHT ➝ LEFT (TOP ROW) */
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* LEFT ➝ RIGHT (BOTTOM ROW) */
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+/* CLASSES */
+.marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 25s linear infinite;
+}
+
+.marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right 25s linear infinite;
+}
+
+/* ============================= */
+/* ✨ OPTIONAL: SMOOTH EDGE FADE */
+/* (use in reviews wrapper) */
+/* ============================= */
+
+.fade-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 80px;
+  pointer-events: none;
+  z-index: 10;
+  background: linear-gradient(to right, var(--background), transparent);
+}
+
+.fade-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 80px;
+  pointer-events: none;
+  z-index: 10;
+  background: linear-gradient(to left, var(--background), transparent);
+}
+
+/* PAUSE INDIVIDUAL ROW ON HOVER */
+.marquee-left:hover,
+.marquee-right:hover {
+  animation-play-state: paused;
 }

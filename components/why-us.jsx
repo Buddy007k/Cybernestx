@@ -37,7 +37,7 @@ export default function WhyUs() {
   ];
 
   return (
-    <section className="py-15 px-6 relative overflow-hidden">
+    <section className="py-20 px-6 relative overflow-hidden">
 
       {/* 🔥 subtle orange glow */}
       <div className="absolute inset-0 -z-10">

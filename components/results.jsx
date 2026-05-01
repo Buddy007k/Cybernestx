@@ -42,7 +42,7 @@ export default function Results() {
   ];
 
   return (
-    <section className="py-15 px-6">
+    <section className="py-20 px-6">
       <div className="max-w-7xl mx-auto text-center space-y-14">
 
         {/* HEADING */}
