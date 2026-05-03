@@ -19,16 +19,16 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed w-full z-50 backdrop-blur-xl border-b transition-all duration-300
+      className={`fixed top-0 left-0 w-full z-[9999] backdrop-blur-xl border-b transition-all duration-300
       ${
         isDark
-          ? "bg-black/60 border-white/10"
-          : "bg-white/50 border-gray-200/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
+          ? "bg-black/70 border-white/10"
+          : "bg-white/70 border-gray-200/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-        {/* 🖼 LOGO */}
+        {/* LOGO */}
         <Link href="/" className="flex items-center">
           <Image
             src={
@@ -58,10 +58,6 @@ export default function Navbar() {
           <Link href="/services" className="hover:text-indigo-600 transition">
             Services
           </Link>
-
-          {/* <Button href="/login" variant="outline">
-            Login
-          </Button> */}
         </div>
 
         {/* Right Side */}
@@ -76,11 +72,12 @@ export default function Navbar() {
           >
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+
           <Button href="/contact" variant="outline" className="hidden md:inline-flex">
             Contact
-          </Button> 
+          </Button>
 
-          {/* Mobile Menu */}
+          {/* Mobile */}
           <div className="md:hidden">
             <MobileSidebar />
           </div>

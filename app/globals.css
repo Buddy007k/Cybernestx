@@ -151,3 +151,8 @@ body {
 .marquee-right:hover {
   animation-play-state: paused;
 }
+
+/* 🔥 NAVBAR SAFE OFFSET (OPTIONAL FUTURE USE) */
+:root {
+  --navbar-height: 80px;
+}
