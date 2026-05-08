@@ -27,8 +27,7 @@ export default function Expertise() {
     {
       title: "Digital Marketing",
       desc: "Performance marketing campaigns designed for reach, engagement, and ROI.",
-      icon: Megaphone,
-      highlight: true, // 🔥 featured one
+      icon: Megaphone, // 🔥 featured one
     },
     {
       title: "UI/UX Design",

@@ -21,15 +21,20 @@ export default function ContactHero() {
         className="absolute inset-0 w-full h-full object-cover -z-20"
       />
 
-      {/* Overlay */}
-      <div className={`absolute inset-0 -z-10 ${isDark ? "bg-black/70" : "bg-black/40"}`} />
+      {/* Overlay (adaptive) */}
+      <div
+        className={`absolute inset-0 -z-10 ${
+          isDark ? "bg-black/70" : "bg-white/10"
+        }`}
+      />
 
       {/* Content */}
       <div className="space-y-4 px-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-white">
+        <h1 className="text-4xl md:text-5xl font-bold text-strong">
           Contact Us
         </h1>
-        <p className="text-gray-300 max-w-xl">
+
+        <p className="text-muted max-w-xl mx-auto">
           Let’s discuss how we can help your business grow with digital and
           e-commerce solutions.
         </p>
