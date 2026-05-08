@@ -98,7 +98,7 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-          <Button href="/login">Get Started Now</Button>
+          <Button href="/services">Get Started Now</Button>
           <Button href="/contact" variant="secondary">
             Book Free Consultation
           </Button>

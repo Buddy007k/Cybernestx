@@ -8,14 +8,11 @@ import WhyUs from "@/components/about/why-us";
 import Technologies from "@/components/about/technologies";
 import Team from "@/components/about/team";
 import CTA from "@/components/about/cta";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
 import Stats from "@/components/about/stats";
 
 export default function AboutPage() {
   return (
     <>
-      <Navbar />
       <AboutHero />
       <AboutIntro />
       <MissionVision />
@@ -27,7 +24,6 @@ export default function AboutPage() {
       <Technologies />
       <Team />
       <CTA />
-      <Footer />
     </>
   );
 }

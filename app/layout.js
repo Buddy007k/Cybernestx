@@ -1,5 +1,7 @@
 import "./globals.css";
 import Providers from "@/components/providers";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export const metadata = {
   title: "CyberNestX",
@@ -9,8 +11,21 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>{children}</Providers>
+      <body className="bg-background text-foreground">
+
+        <Providers>
+          {/* 🔥 GLOBAL NAVBAR */}
+          <Navbar />
+
+          {/* 🔥 MAIN CONTENT */}
+          <main className="min-h-screen">
+            {children}
+          </main>
+
+          {/* 🔥 GLOBAL FOOTER */}
+          <Footer />
+        </Providers>
+
       </body>
     </html>
   );
