@@ -73,7 +73,7 @@ export default function Navbar() {
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <Button href="/contact" variant="outline" className="hidden md:inline-flex">
+          <Button href="/contact" variant="outline" className="hidden md:inline-flex border-orange-500 hover:bg-orange-600 transition">
             Contact
           </Button>
 

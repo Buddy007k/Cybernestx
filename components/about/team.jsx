@@ -16,25 +16,25 @@ export default function Team() {
     {
       name: "Aman Tiwari",
       role: "Founder & CEO",
-      img: "https://i.pravatar.cc/400?img=11",
+      img: "/assets/team/aman.jpeg",
       desc: "Visionary leader driving innovation, strategy, and long-term growth.",
     },
     {
       name: "Abhishek kumar",
       role: "Technical Lead",
-      img: "https://i.pravatar.cc/400?img=12",
+      img: "/assets/team/abhishek.jpeg",
       desc: "Expert in scalable systems, architecture, and performance engineering.",
     },
     {
       name: "Harshit Tiwari",
       role: "UI/UX Designer",
-      img: "https://i.pravatar.cc/400?img=13",
+      img: "/assets/team/harshit.jpg",
       desc: "Designs intuitive, user-focused, and visually engaging experiences.",
     },
     {
-      name: "Neha Gupta",
+      name: "Kartik Verma",
       role: "Marketing Manager",
-      img: "https://i.pravatar.cc/400?img=14",
+      img: "/assets/team/patanahi.jpeg",
       desc: "Drives SEO, paid ads, and data-backed marketing growth strategies.",
     },
   ];
