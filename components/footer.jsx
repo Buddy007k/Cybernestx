@@ -81,12 +81,11 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-5 text-strong">Company</h3>
           <div className="flex flex-col gap-3 text-sm text-muted">
-            <Link href="/about" className="hover:text-primary transition">About Us</Link>
-            <Link href="/portfolio" className="hover:text-primary transition">Portfolio</Link>
-            <Link href="#" className="hover:text-primary transition">Blog</Link>
-            <Link href="#" className="hover:text-primary transition">Pricing</Link>
-            <Link href="#" className="hover:text-primary transition">Testimonials</Link>
-            <Link href="/contact" className="hover:text-primary transition">Contact</Link>
+            <Link href="/about" className="hover:text-orange-500 transition">About Us</Link>
+            <Link href="#" className="hover:text-orange-500 transition">Blog</Link>
+            <Link href="#" className="hover:text-orange-500 transition">Privacy Policy</Link>
+            <Link href="#" className="hover:text-orange-500 transition">Terms & Conditions</Link>
+            <Link href="/contact" className="hover:text-orange-500 transition">Contact</Link>
           </div>
         </div>
 
@@ -94,11 +93,11 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-5 text-strong">Services</h3>
           <div className="flex flex-col gap-3 text-sm text-muted">
-            <span className="hover:text-primary transition cursor-pointer">Website Development</span>
-            <span className="hover:text-primary transition cursor-pointer">SEO Optimization</span>
-            <span className="hover:text-primary transition cursor-pointer">Digital Marketing</span>
-            <span className="hover:text-primary transition cursor-pointer">UI/UX Design</span>
-            <span className="hover:text-primary transition cursor-pointer">E-commerce Management</span>
+            <Link href="/services/web-development" className="hover:text-orange-500  transition">Website Development</Link>
+            <Link href="/services/seo" className="hover:text-orange-500 transition">SEO Optimization</Link>
+            <Link href="/services/digital-marketing" className="hover:text-orange-500 transition">Digital Marketing</Link>
+            <Link href="/services/ui-ux" className="hover:text-orange-500 transition">UI/UX Design</Link>
+            <Link href="/services/ecommerce" className="hover:text-orange-500 transition">E-commerce Management</Link>
           </div>
         </div>
 
