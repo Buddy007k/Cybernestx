@@ -28,7 +28,7 @@ export default function Team() {
     {
       name: "Harshit Tiwari",
       role: "UI/UX Designer",
-      img: "/assets/team/harshit.jpg",
+      img: "/assets/team/harshit.JPG",
       desc: "Designs intuitive, user-focused, and visually engaging experiences.",
     },
     {
