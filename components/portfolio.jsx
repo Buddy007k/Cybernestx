@@ -54,13 +54,6 @@ export default function Portfolio() {
           <p className="text-muted leading-relaxed">
             Each project is crafted to push boundaries and deliver real impact.
           </p>
-
-          <Link
-            href="/portfolio"
-            className="inline-block mt-6 px-6 py-3 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition"
-          >
-            View More
-          </Link>
         </div>
 
         {/* RIGHT SIDE */}

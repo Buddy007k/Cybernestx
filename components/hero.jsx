@@ -35,7 +35,7 @@ export default function Hero() {
       {/* 🌫 OVERLAY */}
       <div
         className={`absolute inset-0 -z-20 ${
-          isDark ? "bg-black/70" : "bg-black/20"
+          isDark ? "bg-black/70" : "bg-white/20"
         }`}
       />
 
@@ -69,9 +69,9 @@ export default function Hero() {
           className={`inline-block text-sm tracking-widest uppercase px-4 py-1 rounded-full ${
             isDark
               ? "text-gray-300"
-              : "text-gray-800 bg-white/40 backdrop-blur-sm border border-white/60"
+              : "text-black"
           }`}
-        >
+        >{/* bg-white/40 backdrop-blur-sm border border-white/60 */}
           Your Digital Success, Our Mission
         </p>
 
@@ -79,9 +79,9 @@ export default function Hero() {
           className={`text-4xl md:text-6xl font-extrabold leading-tight ${
             isDark
               ? "text-white"
-              : "text-black bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg inline-block"
+              : "text-black-200"
           }`}
-        >
+        >{/* bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg inline-block */}
           Transforming Businesses with Smart Digital & E-commerce Solutions
         </h1>
 
@@ -89,16 +89,16 @@ export default function Hero() {
           className={`text-lg max-w-2xl mx-auto ${
             isDark
               ? "text-gray-300"
-              : "text-gray-800 bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg inline-block"
+              : "text-black"
           }`}
-        >
+        >{/* bg-white/20 backdrop-blur-sm px-4 py-3 rounded-lg inline-block */}
           From powerful websites to high-performing marketplace stores,
           CyberNestX helps you build, grow, and scale your business across
           digital platforms like Amazon, Flipkart, and Meesho.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-          <Button href="/services">Get Started Now</Button>
+          <Button href="/services" className="bg-orange-600 text-white hover:bg-orange-700 transition">Get Started Now</Button>
           <Button href="/contact" variant="secondary">
             Book Free Consultation
           </Button>
@@ -134,27 +134,27 @@ export default function Hero() {
           {[...Array(4)].map((_, i) => (
             <div key={i} className="flex gap-20 items-center px-6">
 
-              <div className="flex items-center gap-2 text-indigo-500 opacity-80">
+              <div className="flex items-center gap-2 text-orange-500 opacity-80">
                 <Code2 size={16} />
                 <span>Next.js</span>
               </div>
 
-              <div className="flex items-center gap-2 text-indigo-500 opacity-80">
+              <div className="flex items-center gap-2 text-orange-500 opacity-80">
                 <Wind size={16} />
                 <span>Tailwind CSS</span>
               </div>
 
-              <div className="flex items-center gap-2 text-indigo-500 opacity-80">
+              <div className="flex items-center gap-2 text-orange-500 opacity-80">
                 <Server size={16} />
                 <span>Node.js</span>
               </div>
 
-              <div className="flex items-center gap-2 text-indigo-500 opacity-80">
+              <div className="flex items-center gap-2 text-orange-500 opacity-80">
                 <Database size={16} />
                 <span>MongoDB</span>
               </div>
 
-              <div className="flex items-center gap-2 text-indigo-500 opacity-80">
+              <div className="flex items-center gap-2 text-orange-500 opacity-80">
                 <Atom size={16} />
                 <span>React.js</span>
               </div>

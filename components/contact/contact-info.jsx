@@ -38,7 +38,7 @@ export default function ContactInfo() {
               key={i}
               className="glass p-6 rounded-xl text-center space-y-3"
             >
-              <div className="w-12 h-12 mx-auto flex items-center justify-center bg-indigo-500/10 text-indigo-500 rounded-lg">
+              <div className="w-12 h-12 mx-auto flex items-center justify-center bg-orange-500/10 text-orange-500 rounded-lg">
                 <Icon size={20} />
               </div>
 

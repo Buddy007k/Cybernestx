@@ -47,7 +47,7 @@ export default function Results() {
 
         {/* HEADING */}
         <h2 className="text-4xl md:text-5xl font-bold text-strong">
-          Results That <span className="text-indigo-500">Matter</span>
+          Results That <span className="text-orange-500">Matter</span>
         </h2>
 
         {/* GRID */}
@@ -66,7 +66,7 @@ export default function Results() {
               >
                 {/* ICON */}
                 <div className="mb-5 flex justify-center">
-                  <div className="p-4 rounded-xl bg-indigo-500/10 text-indigo-500 group-hover:scale-110 transition">
+                  <div className="p-4 rounded-xl bg-orange-500/10 text-orange-500 group-hover:scale-110 transition">
                     <Icon size={28} />
                   </div>
                 </div>

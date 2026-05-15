@@ -21,7 +21,7 @@ export default function Growth() {
         {/* LEFT CONTENT */}
         <div className="space-y-6">
           <h2 className="text-4xl md:text-5xl font-bold text-strong leading-tight">
-            Grow Your <span className="text-indigo-500">Online Sales</span>
+            Grow Your <span className="text-orange-500">Online Sales</span>
           </h2>
 
           <p className="text-muted text-lg">
@@ -69,7 +69,7 @@ export default function Growth() {
               {["Amazon", "Flipkart", "Meesho"].map((tag) => (
                 <span
                   key={tag}
-                  className="px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-500 text-sm"
+                  className="px-4 py-2 rounded-full bg-orange-500/20 text-orange-500 text-sm"
                 >
                   {tag}
                 </span>

@@ -59,7 +59,7 @@ export default function CTA() {
           {/* BUTTONS */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
-            <Button href="/contact">
+            <Button href="/contact" className="bg-orange-600 text-white hover:bg-orange-700 transition">
               Get Started Now
             </Button>
 

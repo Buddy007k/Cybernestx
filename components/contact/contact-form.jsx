@@ -40,7 +40,7 @@ export default function ContactForm() {
             placeholder="Message"
           />
 
-          <button className="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+          <button className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
             Send Message
           </button>
         </div>

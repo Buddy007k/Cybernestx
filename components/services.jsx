@@ -104,7 +104,7 @@ export default function ServicesPage() {
                     {service.desc}
                   </p>
 
-                  <span className="text-indigo-600 text-sm font-medium hover:underline">
+                  <span className="text-orange-600 text-sm font-medium hover:underline">
                     Read More →
                   </span>
                 </div>

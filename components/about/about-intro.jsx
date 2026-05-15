@@ -70,10 +70,6 @@ export default function AboutIntro() {
             <p className="flex gap-2 text-muted">✔ Solutions for the Competitive Edge</p>
           </div>
 
-          <button className="mt-4 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-            Learn More
-          </button>
-
         </div>
       </div>
 

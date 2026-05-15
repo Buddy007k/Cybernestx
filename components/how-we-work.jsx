@@ -48,7 +48,7 @@ export default function HowWeWork() {
         {/* HEADING */}
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-strong">
-            How We <span className="text-indigo-500">Work</span>
+            How We <span className="text-orange-500">Work</span>
           </h2>
           <p className="text-muted max-w-2xl mx-auto">
             A structured process designed to deliver consistent, scalable, and high-quality results.
@@ -82,7 +82,7 @@ export default function HowWeWork() {
                           : "bg-white border border-gray-200 shadow-sm"
                       }`}
                     >
-                      <Icon className="text-indigo-500" size={26} />
+                      <Icon className="text-orange-500" size={26} />
                     </div>
                   </div>
 
@@ -102,7 +102,7 @@ export default function HowWeWork() {
                   </p>
 
                   {/* DOT ON LINE */}
-                  <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-indigo-500" />
+                  <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-orange-500" />
                 </div>
               );
             })}

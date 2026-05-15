@@ -18,21 +18,25 @@ export default function Expertise() {
       title: "Website Development",
       desc: "High-performance, scalable, and secure websites tailored to your business goals.",
       icon: Code2,
+      highlight: true,
     },
     {
       title: "Search Engine Optimization",
       desc: "Data-driven SEO strategies to boost rankings, traffic, and visibility.",
       icon: Search,
+      highlight: true,
     },
     {
       title: "Digital Marketing",
       desc: "Performance marketing campaigns designed for reach, engagement, and ROI.",
-      icon: Megaphone, // 🔥 featured one
+      icon: Megaphone,
+      highlight: true,
     },
     {
       title: "UI/UX Design",
       desc: "Modern, intuitive, and user-centric designs that enhance user experience.",
       icon: Palette,
+      highlight: true,
     },
   ];
 

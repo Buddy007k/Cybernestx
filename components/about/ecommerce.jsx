@@ -82,7 +82,7 @@ export default function Ecommerce() {
             ))}
           </div>
 
-          <button className="mt-6 px-6 py-3 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">
+          <button className="mt-6 px-6 py-3 rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition">
             Start Selling →
           </button>
         </div>
