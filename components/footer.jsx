@@ -82,9 +82,9 @@ export default function Footer() {
           <h3 className="font-semibold mb-5 text-strong">Company</h3>
           <div className="flex flex-col gap-3 text-sm text-muted">
             <Link href="/about" className="hover:text-orange-500 transition">About Us</Link>
-            <Link href="#" className="hover:text-orange-500 transition">Blog</Link>
-            <Link href="#" className="hover:text-orange-500 transition">Privacy Policy</Link>
-            <Link href="#" className="hover:text-orange-500 transition">Terms & Conditions</Link>
+            {/* <Link href="#" className="hover:text-orange-500 transition">Blog</Link> */}
+            <Link href="/privacy-policy" className="hover:text-orange-500 transition">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-orange-500 transition">Terms & Conditions</Link>
             <Link href="/contact" className="hover:text-orange-500 transition">Contact</Link>
           </div>
         </div>
@@ -108,12 +108,12 @@ export default function Footer() {
           <div className="space-y-4 text-sm text-muted">
             <div>
               <p className="text-xs uppercase tracking-wider mb-1">Email</p>
-              <p>hello@cybernestx.com</p>
+              <p>cybernestxdigital@gmail.com</p>
             </div>
 
             <div>
               <p className="text-xs uppercase tracking-wider mb-1">Phone</p>
-              <p>+91 98765 43210</p>
+              <p>+91 93507 75714</p>
             </div>
 
             <div>
@@ -124,8 +124,9 @@ export default function Footer() {
             <div>
               <p className="text-xs uppercase tracking-wider mb-1">Address</p>
               <p>
-                CyberNestX Tower, Tech Park <br />
-                Bengaluru, Karnataka, India 560001
+                Cybernestx
+                20th mile, Jatheri Rd, Sector 38,<br />
+                Sonipat, Haryana 131029 
               </p>
             </div>
           </div>
