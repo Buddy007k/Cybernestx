@@ -2,6 +2,7 @@ import "./globals.css";
 import Providers from "@/components/providers";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import LeadPopup from "@/components/ui/lead-popup";
 
 export const metadata = {
   title: "CyberNestX",
@@ -14,8 +15,12 @@ export default function RootLayout({ children }) {
       <body className="bg-background text-foreground">
 
         <Providers>
+
           {/* 🔥 GLOBAL NAVBAR */}
           <Navbar />
+
+          {/* 🔥 POPUP (GLOBAL OVERLAY) */}
+          <LeadPopup />
 
           {/* 🔥 MAIN CONTENT */}
           <main className="min-h-screen">
@@ -24,6 +29,7 @@ export default function RootLayout({ children }) {
 
           {/* 🔥 GLOBAL FOOTER */}
           <Footer />
+
         </Providers>
 
       </body>

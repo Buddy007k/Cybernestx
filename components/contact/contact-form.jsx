@@ -7,6 +7,17 @@ export default function ContactForm() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
@@ -19,6 +30,47 @@ export default function ContactForm() {
     "UI/UX Design",
     "E-commerce Solutions",
   ];
+
+  // 🔥 HANDLE INPUT CHANGE
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // 🔥 SUBMIT FORM
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Message sent successfully 🚀");
+
+        setForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+        });
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (err) {
+      alert("Error submitting form");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="py-24 px-6">
@@ -33,27 +85,57 @@ export default function ContactForm() {
 
           {/* NAME */}
           <div className="grid grid-cols-2 gap-4">
-            <input className="input" placeholder="First Name" />
-            <input className="input" placeholder="Last Name" />
+            <input
+              name="firstName"
+              value={form.firstName}
+              onChange={handleChange}
+              className="input"
+              placeholder="First Name"
+            />
+            <input
+              name="lastName"
+              value={form.lastName}
+              onChange={handleChange}
+              className="input"
+              placeholder="Last Name"
+            />
           </div>
 
           {/* CONTACT */}
           <div className="grid grid-cols-2 gap-4">
-            <input className="input" placeholder="Email" />
-            <input className="input" placeholder="Phone" />
+            <input
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className="input"
+              placeholder="Email"
+            />
+            <input
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              className="input"
+              placeholder="Phone"
+            />
           </div>
 
-          {/* 🔥 SERVICE DROPDOWN */}
+          {/* SERVICE */}
           <select
+            name="service"
+            value={form.service}
+            onChange={handleChange}
             className={`w-full px-4 py-3 rounded-lg border outline-none transition
-  ${isDark
+            ${
+              isDark
                 ? "bg-black/60 text-white border-white/10 focus:border-orange-500"
                 : "bg-white text-gray-900 border-gray-200 focus:border-orange-500"
-              }`}
+            }`}
           >
-            <option value="" className={isDark ? "bg-black text-white" : "bg-white text-black"}>Select Service</option>
+            <option value="">
+              Select Service
+            </option>
             {services.map((service, i) => (
-              <option key={i} value={service} className={isDark ? "bg-black text-white" : "bg-white text-black"}>
+              <option key={i} value={service}>
                 {service}
               </option>
             ))}
@@ -61,28 +143,32 @@ export default function ContactForm() {
 
           {/* MESSAGE */}
           <textarea
+            name="message"
+            value={form.message}
+            onChange={handleChange}
             className="input w-full h-32"
             placeholder="Message"
           />
 
           {/* BUTTON */}
-          <button className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
-            Send Message
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition disabled:opacity-60"
+          >
+            {loading ? "Sending..." : "Send Message"}
           </button>
         </div>
 
         {/* IMAGE SIDE */}
         <div className="relative hidden lg:block">
-
           <img
             src="/assets/contact_img.jpeg"
             className="rounded-2xl w-full h-[500px] object-cover"
           />
 
-          {/* Overlay Gradient */}
           <div className="absolute inset-0 bg-gradient-to-tr from-black/70 to-transparent rounded-2xl" />
 
-          {/* Floating Card */}
           <div className="absolute bottom-6 left-6 glass p-4 rounded-xl max-w-xs">
             <p className="text-sm text-muted">
               "We respond within 24 hours. Your growth is our priority."
@@ -91,7 +177,6 @@ export default function ContactForm() {
               CyberNestX Team
             </span>
           </div>
-
         </div>
 
       </div>
