@@ -12,6 +12,14 @@ export default function ContactForm() {
 
   const isDark = theme === "dark";
 
+  const services = [
+    "Website Development",
+    "SEO Optimization",
+    "Digital Marketing",
+    "UI/UX Design",
+    "E-commerce Solutions",
+  ];
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
@@ -23,23 +31,41 @@ export default function ContactForm() {
             Send us a message
           </h2>
 
+          {/* NAME */}
           <div className="grid grid-cols-2 gap-4">
             <input className="input" placeholder="First Name" />
             <input className="input" placeholder="Last Name" />
           </div>
 
+          {/* CONTACT */}
           <div className="grid grid-cols-2 gap-4">
             <input className="input" placeholder="Email" />
             <input className="input" placeholder="Phone" />
           </div>
 
-          <input className="input w-full" placeholder="Subject" />
+          {/* 🔥 SERVICE DROPDOWN */}
+          <select
+            className={`w-full px-4 py-3 rounded-lg border outline-none transition
+  ${isDark
+                ? "bg-black/60 text-white border-white/10 focus:border-orange-500"
+                : "bg-white text-gray-900 border-gray-200 focus:border-orange-500"
+              }`}
+          >
+            <option value="" className={isDark ? "bg-black text-white" : "bg-white text-black"}>Select Service</option>
+            {services.map((service, i) => (
+              <option key={i} value={service} className={isDark ? "bg-black text-white" : "bg-white text-black"}>
+                {service}
+              </option>
+            ))}
+          </select>
 
+          {/* MESSAGE */}
           <textarea
             className="input w-full h-32"
             placeholder="Message"
           />
 
+          {/* BUTTON */}
           <button className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
             Send Message
           </button>

@@ -5,7 +5,7 @@ export default function EcommercePage() {
     <ServiceTemplate
       title="E-commerce Solutions"
       description="Complete marketplace and store management for scalable growth."
-      image="/assets/ecommerce-card.jpeg"
+      image="/assets/services/ec-banner.jpeg"
       offerings={[
         "Amazon & Flipkart Management",
         "Product Listing Optimization",

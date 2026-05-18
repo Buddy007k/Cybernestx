@@ -5,7 +5,7 @@ export default function SEOPage() {
     <ServiceTemplate
       title="Search Engine Optimization"
       description="Increase your visibility and rank higher with strategic SEO solutions."
-      image="/assets/SEO-card.jpeg"
+      image="/assets/services/seo-banner.jpeg"
       offerings={[
         "Keyword Research & Strategy",
         "On-Page SEO Optimization",

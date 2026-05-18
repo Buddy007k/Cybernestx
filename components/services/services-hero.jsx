@@ -2,7 +2,7 @@
 
 export default function ServicesHero() {
   return (
-    <section className="py-28 px-6 text-center relative overflow-hidden">
+    <section className="py-24 px-6 text-center relative overflow-hidden">
 
       {/* BG Glow */}
       <div className="absolute inset-0 -z-10">

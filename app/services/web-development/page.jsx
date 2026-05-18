@@ -5,7 +5,7 @@ export default function WebDevelopmentPage() {
     <ServiceTemplate
       title="Website Development"
       description="We create high-performance, scalable, and secure websites that convert visitors into customers."
-      image="/assets/web-d-card.jpeg"
+      image="/assets/services/web-banner.jpeg"
       offerings={[
         "Custom Website Development",
         "E-commerce Website Development",

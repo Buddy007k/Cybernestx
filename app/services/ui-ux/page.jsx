@@ -5,7 +5,7 @@ export default function UIUXPage() {
     <ServiceTemplate
       title="UI/UX Design"
       description="We design intuitive, modern, and conversion-focused user experiences."
-      image="/assets/ui-ux-card.jpg"
+      image="/assets/services/ui-banner.jpeg"
       offerings={[
         "Website & App UI Design",
         "Wireframing & Prototyping",

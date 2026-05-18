@@ -5,7 +5,7 @@ export default function DigitalMarketingPage() {
     <ServiceTemplate
       title="Digital Marketing"
       description="We create data-driven campaigns that generate leads and maximize ROI."
-      image="/assets/digital-marketing-card.jpeg"
+      image="/assets/services/dm-banner.jpeg"
       offerings={[
         "Social Media Marketing",
         "Google Ads & PPC",

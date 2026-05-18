@@ -13,7 +13,7 @@ export default function ServicesGrid() {
         "CMS & WordPress",
         "Mobile Responsive Design",
       ],
-      img: "/assets/web-d-card.jpeg",
+      img: "/assets/services/web-d.jpeg",
       href: "/services/web-development",
     },
     {
@@ -25,7 +25,7 @@ export default function ServicesGrid() {
         "Technical SEO",
         "Link Building",
       ],
-      img: "/assets/SEO-card.jpeg",
+      img: "/assets/services/seo.jpeg",
       href: "/services/seo",
     },
     {
@@ -37,7 +37,7 @@ export default function ServicesGrid() {
         "Content Marketing",
         "Brand Awareness",
       ],
-      img: "/assets/digital-marketing-card.jpeg",
+      img: "/assets/services/digi-market.jpeg",
       href: "/services/digital-marketing",
     },
     {
@@ -49,7 +49,7 @@ export default function ServicesGrid() {
         "Prototyping",
         "UX Optimization",
       ],
-      img: "/assets/ui-ux-card.jpg",
+      img: "/assets/services/ui-ux.jpeg",
       href: "/services/ui-ux",
     },
     {
