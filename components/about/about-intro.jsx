@@ -42,7 +42,7 @@ export default function AboutIntro() {
           <div className="absolute -bottom-10 right-[-20px]">
             <div className="relative overflow-hidden rounded-xl shadow-2xl">
               <img
-                src="/assets/about-2.jpeg"
+                src="/assets/about-3.jpeg"
                 className="w-40 h-40 object-cover transition duration-500 hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/0 hover:bg-black/30 transition" />
@@ -141,7 +141,7 @@ export default function AboutIntro() {
           <div className="absolute -bottom-10 left-[-20px]">
             <div className="relative overflow-hidden rounded-xl shadow-2xl">
               <img
-                src="/assets/about-1.jpeg"
+                src="/assets/about-4.jpeg"
                 className="w-44 h-44 object-cover transition duration-500 hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/0 hover:bg-black/30 transition" />
