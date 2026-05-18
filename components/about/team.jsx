@@ -14,15 +14,15 @@ export default function Team() {
 
   const team = [
     {
-      name: "Aman Tiwari",
+      name: "Abhishek kumar",
       role: "Founder & CEO",
-      img: "/assets/team/aman.jpeg",
+      img: "/assets/team/abhishek.jpeg",
       desc: "Visionary leader driving innovation, strategy, and long-term growth.",
     },
     {
-      name: "Abhishek kumar",
+      name: "Aman Tiwari",
       role: "Technical Lead",
-      img: "/assets/team/abhishek.jpeg",
+      img: "/assets/team/aman.jpeg",
       desc: "Expert in scalable systems, architecture, and performance engineering.",
     },
     {
