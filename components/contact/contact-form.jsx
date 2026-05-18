@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ContactForm() {
   const { theme } = useTheme();
@@ -31,13 +32,26 @@ export default function ContactForm() {
     "E-commerce Solutions",
   ];
 
-  // 🔥 HANDLE INPUT CHANGE
+  // 🔥 HANDLE INPUT
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🔥 SUBMIT FORM
+  // 🔥 VALIDATION
+  const validateForm = () => {
+    if (!form.firstName || !form.email || !form.service || !form.message) {
+      toast.error("Please fill all required fields");
+      return false;
+    }
+    return true;
+  };
+
+  // 🔥 SUBMIT
   const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    const toastId = toast.loading("Sending message...");
+
     try {
       setLoading(true);
 
@@ -52,7 +66,7 @@ export default function ContactForm() {
       const data = await res.json();
 
       if (data.success) {
-        alert("Message sent successfully 🚀");
+        toast.success("Message sent successfully 🚀", { id: toastId });
 
         setForm({
           firstName: "",
@@ -63,10 +77,12 @@ export default function ContactForm() {
           message: "",
         });
       } else {
-        alert(data.error || "Something went wrong");
+        toast.error(data.error || "Something went wrong", {
+          id: toastId,
+        });
       }
     } catch (err) {
-      alert("Error submitting form");
+      toast.error("Server error. Try again.", { id: toastId });
     } finally {
       setLoading(false);
     }
@@ -90,7 +106,7 @@ export default function ContactForm() {
               value={form.firstName}
               onChange={handleChange}
               className="input"
-              placeholder="First Name"
+              placeholder="First Name *"
             />
             <input
               name="lastName"
@@ -108,7 +124,7 @@ export default function ContactForm() {
               value={form.email}
               onChange={handleChange}
               className="input"
-              placeholder="Email"
+              placeholder="Email *"
             />
             <input
               name="phone"
@@ -131,9 +147,7 @@ export default function ContactForm() {
                 : "bg-white text-gray-900 border-gray-200 focus:border-orange-500"
             }`}
           >
-            <option value="">
-              Select Service
-            </option>
+            <option value="">Select Service *</option>
             {services.map((service, i) => (
               <option key={i} value={service}>
                 {service}
@@ -147,7 +161,7 @@ export default function ContactForm() {
             value={form.message}
             onChange={handleChange}
             className="input w-full h-32"
-            placeholder="Message"
+            placeholder="Message *"
           />
 
           {/* BUTTON */}

@@ -2,19 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import toast from "react-hot-toast";
 
 export default function LeadPopup() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    service: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setMounted(true);
 
-    const seen = localStorage.getItem("lead-popup-seen");
+    const seen = sessionStorage.getItem("lead-popup-seen");
+
     if (!seen) {
-      setTimeout(() => setOpen(true), 1500); // delay for UX
-      localStorage.setItem("lead-popup-seen", "true");
+      setTimeout(() => setOpen(true), 1500);
+      sessionStorage.setItem("lead-popup-seen", "true");
     }
   }, []);
 
@@ -29,6 +41,64 @@ export default function LeadPopup() {
     "UI/UX Design",
     "E-commerce Solutions",
   ];
+
+  // 🔥 HANDLE INPUT
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // 🔥 VALIDATION
+  const validateForm = () => {
+    if (!form.firstName || !form.email || !form.service || !form.message) {
+      toast.error("Please fill all required fields");
+      return false;
+    }
+    return true;
+  };
+
+  // 🔥 SUBMIT
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    const toastId = toast.loading("Sending request...");
+
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Request sent successfully 🚀", { id: toastId });
+
+        setForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          service: "",
+          message: "",
+        });
+
+        // 🔥 Close popup after slight delay (feels smoother)
+        setTimeout(() => setOpen(false), 800);
+      } else {
+        toast.error(data.error || "Something went wrong", {
+          id: toastId,
+        });
+      }
+    } catch (err) {
+      toast.error("Server error. Try again.", { id: toastId });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -71,41 +141,64 @@ export default function LeadPopup() {
           <div className="space-y-4">
 
             <div className="grid grid-cols-2 gap-4">
-              <input className="input" placeholder="First Name" />
-              <input className="input" placeholder="Last Name" />
+              <input
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                className="input"
+                placeholder="First Name *"
+              />
+              <input
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                className="input"
+                placeholder="Last Name"
+              />
             </div>
 
-            <input className="input w-full" placeholder="Email" />
+            <input
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className="input w-full"
+              placeholder="Email *"
+            />
 
-            {/* SERVICE DROPDOWN */}
+            {/* SERVICE */}
             <select
+              name="service"
+              value={form.service}
+              onChange={handleChange}
               className={`w-full px-4 py-3 rounded-lg border outline-none transition
               ${
                 isDark
-                  ? "bg-black/60 text-white border-white/10"
-                  : "bg-white text-gray-900 border-gray-200"
+                  ? "bg-black/60 text-white border-white/10 focus:border-orange-500"
+                  : "bg-white text-gray-900 border-gray-200 focus:border-orange-500"
               }`}
             >
-              <option className={isDark ? "bg-black text-white" : ""}>
-                Select Service
-              </option>
+              <option value="">Select Service *</option>
               {services.map((s, i) => (
-                <option
-                  key={i}
-                  className={isDark ? "bg-black text-white" : ""}
-                >
+                <option key={i} value={s}>
                   {s}
                 </option>
               ))}
             </select>
 
             <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
               className="input w-full h-28"
-              placeholder="Message"
+              placeholder="Message *"
             />
 
-            <button className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition">
-              Submit Request
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="w-full py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition disabled:opacity-60"
+            >
+              {loading ? "Sending..." : "Submit Request"}
             </button>
 
           </div>

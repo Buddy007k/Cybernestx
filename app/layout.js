@@ -3,6 +3,7 @@ import Providers from "@/components/providers";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import LeadPopup from "@/components/ui/lead-popup";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "CyberNestX",
@@ -18,6 +19,19 @@ export default function RootLayout({ children }) {
 
           {/* 🔥 GLOBAL NAVBAR */}
           <Navbar />
+
+          {/* 🔥 TOASTER (REQUIRED) */}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: "var(--background)",
+                color: "var(--foreground)",
+                border: "1px solid var(--border)",
+              },
+            }}
+          />
 
           {/* 🔥 POPUP (GLOBAL OVERLAY) */}
           <LeadPopup />

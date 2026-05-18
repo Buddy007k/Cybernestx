@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 export async function POST(req) {
   try {
@@ -6,26 +6,36 @@ export async function POST(req) {
 
     const { firstName, lastName, email, phone, service, message } = body;
 
-    // 🔥 BASIC VALIDATION
-    if (!firstName || !email || !service) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
+    // 🔥 transporter (use your Gmail or SMTP)
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS, // App password (NOT your real password)
+      },
+    });
 
-    // 🔥 FOR NOW: just log (later DB/email)
-    console.log("📩 New Lead:", body);
+    // 🔥 email content
+    const mailOptions = {
+      from: `"CyberNestX Lead" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_TO, // your receiving email
+      subject: `🚀 New Service Inquiry - ${service}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    };
 
-    return NextResponse.json(
-      { success: true, message: "Form submitted successfully" },
-      { status: 200 }
-    );
+    await transporter.sendMail(mailOptions);
 
-  } catch (err) {
-    return NextResponse.json(
-      { error: "Something went wrong" },
-      { status: 500 }
-    );
+    return Response.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    return Response.json({ success: false, error: "Email failed" }, { status: 500 });
   }
 }
