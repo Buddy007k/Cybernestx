@@ -3,10 +3,14 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ContactForm() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { user } = useAuth();
 
   const [form, setForm] = useState({
     firstName: "",
@@ -54,6 +58,14 @@ export default function ContactForm() {
 
     try {
       setLoading(true);
+
+      await addDoc(collection(db, "messages"), {
+        name: `${form.firstName} ${form.lastName}`.trim(),
+        email: form.email,
+        message: form.message,
+        userId: user?.uid || null,
+        createdAt: new Date().toISOString(),
+      });
 
       const res = await fetch("/api/contact", {
         method: "POST",

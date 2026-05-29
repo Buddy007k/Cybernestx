@@ -1,6 +1,7 @@
 "use client";
 
 import ServicePricing from "./service-pricing";
+import ServiceRequestButton from "./service-request-button";
 import { Clock, Users, Target } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -9,7 +10,9 @@ export default function ServiceTemplate({
   title,
   description,
   image,
-  offerings,
+  serviceId,
+  offerings = [],
+  pricingPlans = [],
   outcome,
 }) {
   const { theme } = useTheme();
@@ -114,11 +117,11 @@ export default function ServiceTemplate({
 
                 <div>
                   <h3 className="text-lg font-semibold text-strong mb-1">
-                    {item}
+                    {item.title}
                   </h3>
-                  <p className="text-sm text-muted">
-                    High-quality implementation focused on performance and scalability.
-                  </p>
+                  {item.description ? (
+                    <p className="text-sm text-muted">{item.description}</p>
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -127,7 +130,15 @@ export default function ServiceTemplate({
       </section>
 
       {/* 🔥 PRICING */}
-      <ServicePricing />
+      <ServicePricing pricingPlans={pricingPlans} />
+
+      {serviceId && (
+        <section className="px-6 pb-8">
+          <div className="max-w-6xl mx-auto">
+            <ServiceRequestButton serviceId={serviceId} serviceName={title} />
+          </div>
+        </section>
+      )}
 
       {/* 🔥 OUTCOME */}
       <section className="py-20 text-center px-6">

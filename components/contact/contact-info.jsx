@@ -7,17 +7,17 @@ export default function ContactInfo() {
     {
       icon: MapPin,
       title: "Office Address",
-      value: "Delhi, India",
+      value: "Sonipat, Haryana, India",
     },
     {
       icon: Phone,
       title: "Phone Number",
-      value: "+91 9876543210",
+      value: "+91 9350775714",
     },
     {
       icon: Mail,
       title: "Email Address",
-      value: "contact@cybernestx.com",
+      value: "cybernestxdigital@gmail.com",
     },
     {
       icon: Clock,

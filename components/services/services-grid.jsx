@@ -1,80 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { normalizeFeatures } from "@/lib/service-data";
 
-export default function ServicesGrid() {
-  const services = [
-    {
-      title: "Website Development",
-      desc: "We build high-performance, scalable, and secure websites tailored to your business goals.",
-      points: [
-        "Custom Web Development",
-        "E-commerce Solutions",
-        "CMS & WordPress",
-        "Mobile Responsive Design",
-      ],
-      img: "/assets/services/web-d.jpeg",
-      href: "/services/web-development",
-    },
-    {
-      title: "Search Engine Optimization",
-      desc: "Increase visibility and rank higher with our strategic SEO solutions.",
-      points: [
-        "Keyword Research",
-        "On-page SEO",
-        "Technical SEO",
-        "Link Building",
-      ],
-      img: "/assets/services/seo.jpeg",
-      href: "/services/seo",
-    },
-    {
-      title: "Digital Marketing",
-      desc: "Data-driven campaigns to generate leads and maximize ROI.",
-      points: [
-        "Social Media Marketing",
-        "Google Ads & PPC",
-        "Content Marketing",
-        "Brand Awareness",
-      ],
-      img: "/assets/services/digi-market.jpeg",
-      href: "/services/digital-marketing",
-    },
-    {
-      title: "UI/UX Design",
-      desc: "We design intuitive, modern, and conversion-focused user experiences.",
-      points: [
-        "UI Design",
-        "Wireframing",
-        "Prototyping",
-        "UX Optimization",
-      ],
-      img: "/assets/services/ui-ux.jpeg",
-      href: "/services/ui-ux",
-    },
-    {
-      title: "E-commerce Solutions",
-      desc: "Complete marketplace and store management for scalable growth.",
-      points: [
-        "Amazon & Flipkart",
-        "Product Optimization",
-        "Inventory Management",
-        "Growth Strategy",
-      ],
-      img: "/assets/ecommerce-card.jpeg",
-      href: "/services/ecommerce",
-    },
-  ];
-
+export default function ServicesGrid({ services = [] }) {
   return (
     <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto space-y-28">
 
         {services.map((service, i) => {
           const isReverse = i % 2 !== 0;
+          const href = `/services/${service.slug}`;
 
           return (
-            <Link key={i} href={service.href} className="group block">
+            <Link key={service.id || i} href={href} className="group block">
 
               <div className="grid lg:grid-cols-2 gap-16 items-center cursor-pointer">
 
@@ -88,7 +27,7 @@ export default function ServicesGrid() {
                   <div className="absolute -inset-4 bg-indigo-500/10 blur-2xl -z-10 opacity-0 group-hover:opacity-100 transition" />
 
                   <img
-                    src={service.img}
+                    src={service.image}
                     alt={service.title}
                     className="rounded-2xl w-full h-[350px] object-cover shadow-lg transition duration-500 group-hover:scale-[1.03]"
                   />
@@ -105,19 +44,25 @@ export default function ServicesGrid() {
                   </h3>
 
                   <p className="text-muted leading-relaxed">
-                    {service.desc}
+                    {service.description}
                   </p>
 
-                  {/* POINTS */}
+                  {/* POINTS / FEATURES */}
                   <div className="space-y-2">
-                    {service.points.map((point, idx) => (
-                      <p
-                        key={idx}
-                        className="text-muted flex items-center gap-2"
-                      >
-                        ✔ {point}
-                      </p>
-                    ))}
+                    {normalizeFeatures(service.features)
+                      .slice(0, 4)
+                      .map((feature, idx) => (
+                        <div key={idx} className="space-y-0.5">
+                          <p className="text-muted flex items-center gap-2">
+                            ✔ <span className="font-medium text-strong">{feature.title}</span>
+                          </p>
+                          {feature.description ? (
+                            <p className="text-sm text-muted pl-6">
+                              {feature.description}
+                            </p>
+                          ) : null}
+                        </div>
+                      ))}
                   </div>
 
                   {/* CTA */}
@@ -134,6 +79,12 @@ export default function ServicesGrid() {
             </Link>
           );
         })}
+
+        {services.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-muted text-xl">No services found.</p>
+          </div>
+        )}
 
       </div>
     </section>

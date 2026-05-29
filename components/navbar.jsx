@@ -5,17 +5,30 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import MobileSidebar from "./mobile-sidebar";
 import Button from "./ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const { user, loading, logout } = useAuth();
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   const isDark = theme === "dark";
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
+
+  const navLinkClass = `hover:text-indigo-600 transition font-medium ${
+    isDark ? "text-white" : "text-gray-900"
+  }`;
 
   return (
     <nav
@@ -115,6 +128,41 @@ export default function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
+
+          {/* Auth (desktop) */}
+          {!loading && (
+            <div className="hidden md:flex items-center gap-4">
+              {!user ? (
+                <>
+                  <Link href="/login" className={navLinkClass}>
+                    Login
+                  </Link>
+                  <Link href="/register" className={navLinkClass}>
+                    Signup
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {user.role === "admin" ? (
+                    <Link href="/admin" className={navLinkClass}>
+                      Admin
+                    </Link>
+                  ) : (
+                    <Link href="/dashboard" className={navLinkClass}>
+                      Dashboard
+                    </Link>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={navLinkClass}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+          )}
 
           {/* Theme Toggle */}
           <button

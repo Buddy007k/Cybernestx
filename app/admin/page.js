@@ -1,82 +1,205 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Navbar from "@/components/navbar";
-import Section from "@/components/ui/section";
-import Card from "@/components/ui/card";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { getAllServices, addService, updateService, deleteService } from "@/lib/services";
+import {
+  getAllRequests,
+  updateRequestStatus,
+  getCollectionCount,
+} from "@/lib/requests";
+import ServiceForm from "@/components/admin/ServiceForm";
+import ServiceList from "@/components/admin/ServiceList";
+import AdminStats from "@/components/admin/AdminStats";
+import RequestList from "@/components/admin/RequestList";
+import { useAuth } from "@/context/AuthContext";
 import Button from "@/components/ui/button";
 
-export default function Admin() {
-  const [messages, setMessages] = useState([]);
-  const [auth, setAuth] = useState("");
-  const [authorized, setAuthorized] = useState(false);
+export default function AdminDashboard() {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+  const isAuthed = !!user;
+  const isAdmin = user?.role === "admin";
+  const [services, setServices] = useState([]);
+  const [requests, setRequests] = useState([]);
+  const [stats, setStats] = useState({
+    services: 0,
+    requests: 0,
+    users: 0,
+  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentService, setCurrentService] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
 
-  // 🔐 Simple password check
-  const handleLogin = () => {
-    if (auth === "admin123") {
-      setAuthorized(true);
-      fetchMessages();
-    } else {
-      alert("Wrong password");
+  const fetchServices = async () => {
+    const data = await getAllServices();
+    setServices(data);
+    return data;
+  };
+
+  const fetchRequests = async () => {
+    const data = await getAllRequests();
+    setRequests(data);
+    return data;
+  };
+
+  const fetchStats = async (servicesList) => {
+    const [requestsCount, usersCount] = await Promise.all([
+      getCollectionCount("requests"),
+      getCollectionCount("users"),
+    ]);
+    setStats({
+      services: servicesList?.length ?? 0,
+      requests: requestsCount,
+      users: usersCount,
+    });
+  };
+
+  const loadDashboard = async () => {
+    setFetchLoading(true);
+    try {
+      const servicesList = await fetchServices();
+      await fetchRequests();
+      await fetchStats(servicesList);
+    } finally {
+      setFetchLoading(false);
     }
   };
 
-  const fetchMessages = async () => {
-    const res = await fetch("/api/admin/messages");
-    const data = await res.json();
-    setMessages(data);
+  useEffect(() => {
+    if (loading) return;
+    if (!isAuthed) {
+      router.replace("/login");
+      return;
+    }
+    if (!isAdmin) {
+      router.replace("/");
+      return;
+    }
+    loadDashboard();
+  }, [loading, isAuthed, isAdmin, router]);
+
+  if (loading || !isAuthed || !isAdmin) return null;
+
+  const handleAddClick = () => {
+    setCurrentService(null);
+    setIsEditing(true);
   };
 
-  const deleteMessage = async (id) => {
-    await fetch(`/api/admin/messages/${id}`, {
-      method: "DELETE",
-    });
-    fetchMessages();
+  const handleEditClick = (service) => {
+    setCurrentService(service);
+    setIsEditing(true);
   };
 
-  if (!authorized) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="space-y-4 text-center">
-          <h2 className="text-2xl font-bold text-strong">
-            Admin Login
-          </h2>
-          <input
-            type="password"
-            placeholder="Enter password"
-            className="border p-2 rounded"
-            onChange={(e) => setAuth(e.target.value)}
-          />
-          <br />
-          <Button onClick={handleLogin}>Login</Button>
-        </div>
-      </div>
+  const handleFormSubmit = async (formData) => {
+    setIsLoading(true);
+    try {
+      if (currentService) {
+        const res = await updateService(currentService.id, formData);
+        if (res?.success === false) throw new Error(res.error || "Update failed");
+      } else {
+        const res = await addService(formData);
+        if (res?.success === false) throw new Error(res.error || "Create failed");
+      }
+      setIsEditing(false);
+      setCurrentService(null);
+      await loadDashboard();
+    } catch (error) {
+      console.error("Operation failed:", error);
+      alert("Something went wrong!");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteService(id);
+      if (res?.success === false) throw new Error(res.error || "Delete failed");
+      await loadDashboard();
+    } catch (error) {
+      console.error("Delete failed:", error);
+      alert("Failed to delete service");
+    }
+  };
+
+  const handleStatusChange = async (requestId, status) => {
+    const res = await updateRequestStatus(requestId, status);
+    if (res?.success === false) {
+      alert("Failed to update status");
+      return;
+    }
+    setRequests((prev) =>
+      prev.map((r) => (r.id === requestId ? { ...r, status } : r))
     );
-  }
+  };
 
   return (
-    <>
-      <Navbar />
-
-      <Section title="Admin Dashboard">
-        <div className="grid gap-4">
-          {messages.map((msg) => (
-            <Card key={msg._id}>
-              <p><strong>Name:</strong> {msg.name}</p>
-              <p><strong>Email:</strong> {msg.email}</p>
-              <p><strong>Message:</strong> {msg.message}</p>
-
-              <Button
-                className="mt-4"
-                variant="outline"
-                onClick={() => deleteMessage(msg._id)}
-              >
-                Delete
-              </Button>
-            </Card>
-          ))}
+    <main className="min-h-screen pt-28 pb-12 px-6">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-strong">Admin Dashboard</h1>
+            <p className="text-muted">Manage services and client requests</p>
+          </div>
+          {!isEditing && (
+            <Button onClick={handleAddClick} className="bg-orange-600 text-white hover:bg-orange-700">
+              + Add New Service
+            </Button>
+          )}
         </div>
-      </Section>
-    </>
+
+        {fetchLoading ? (
+          <div className="flex justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500" />
+          </div>
+        ) : (
+          <>
+            {isEditing ? (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-strong">
+                    {currentService ? `Edit: ${currentService.title}` : "Create New Service"}
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)}
+                    className="text-muted hover:text-strong transition"
+                  >
+                    ← Back to Dashboard
+                  </button>
+                </div>
+                <ServiceForm
+                  initialData={currentService}
+                  onSubmit={handleFormSubmit}
+                  onCancel={() => setIsEditing(false)}
+                  isLoading={isLoading}
+                />
+              </div>
+            ) : (
+              <>
+                <AdminStats
+                  servicesCount={stats.services}
+                  requestsCount={stats.requests}
+                  usersCount={stats.users}
+                />
+
+                <RequestList requests={requests} onStatusChange={handleStatusChange} />
+
+                <div className="space-y-4">
+                  <h2 className="text-xl font-bold text-strong">Services</h2>
+                  <ServiceList
+                    services={services}
+                    onEdit={handleEditClick}
+                    onDelete={handleDelete}
+                  />
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </main>
   );
 }

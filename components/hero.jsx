@@ -9,16 +9,29 @@ import {
   Database,
   Atom
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import Button from "./ui/button";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Hero() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
+  const { user, loading } = useAuth();
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   const isDark = theme === "dark";
+
+  const handleGetStarted = () => {
+    if (loading) return;
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+    router.push(user.role === "admin" ? "/admin" : "/dashboard");
+  };
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden pt-28 md:pt-32 pb-24">
@@ -98,7 +111,12 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-          <Button href="/services" className="bg-orange-600 text-white hover:bg-orange-700 transition">Get Started Now</Button>
+          <Button
+            onClick={handleGetStarted}
+            className="bg-orange-600 text-white hover:bg-orange-700 transition"
+          >
+            Get Started Now
+          </Button>
           <Button href="/contact" variant="secondary">
             Book Free Consultation
           </Button>
