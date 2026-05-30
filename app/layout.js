@@ -30,6 +30,30 @@ export default function RootLayout({ children }) {
                 color: "var(--foreground)",
                 border: "1px solid var(--border)",
               },
+              success: {
+                duration: 4000,
+                style: {
+                  background: "#ecfdf5",
+                  color: "#065f46",
+                  border: "1px solid #6ee7b7",
+                },
+                iconTheme: {
+                  primary: "#10b981",
+                  secondary: "#ecfdf5",
+                },
+              },
+              error: {
+                duration: 4000,
+                style: {
+                  background: "#fef2f2",
+                  color: "#991b1b",
+                  border: "1px solid #fca5a5",
+                },
+                iconTheme: {
+                  primary: "#ef4444",
+                  secondary: "#fef2f2",
+                },
+              },
             }}
           />
 

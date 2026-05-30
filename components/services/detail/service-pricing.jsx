@@ -2,10 +2,18 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import {
+  formatDiscountedPrice,
+  getUserDiscount,
+  parseNumericPrice,
+} from "@/lib/discount";
 
 export default function ServicePricing({ pricingPlans = [] }) {
   const { theme } = useTheme();
+  const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const discountPercent = getUserDiscount(user);
 
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -47,9 +55,21 @@ export default function ServicePricing({ pricingPlans = [] }) {
                 {plan.name}
               </h3>
 
-              <h2 className="text-3xl font-bold text-strong mb-6">
-                {plan.price}
-              </h2>
+              <div className="mb-6">
+                {discountPercent > 0 && parseNumericPrice(plan.price) !== null ? (
+                  <>
+                    <p className="text-lg text-muted line-through">{plan.price}</p>
+                    <h2 className="text-3xl font-bold text-orange-500">
+                      {formatDiscountedPrice(plan.price, discountPercent)}
+                    </h2>
+                    <p className="text-sm text-green-600 dark:text-green-400 mt-1 font-medium">
+                      You saved {discountPercent}%
+                    </p>
+                  </>
+                ) : (
+                  <h2 className="text-3xl font-bold text-strong">{plan.price}</h2>
+                )}
+              </div>
 
               <div className="space-y-3 mb-8">
                 {(plan.features || []).map((f, idx) => (

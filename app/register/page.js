@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
 import GoogleSignInButton from "@/components/auth/google-sign-in-button";
 import { useAuth } from "@/context/AuthContext";
-import toast from "react-hot-toast";
+import { showSuccess, showError } from "@/lib/toast";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -22,7 +22,7 @@ export default function Register() {
 
   const handleRegister = async () => {
     if (!form.name || !form.email || !form.password) {
-      toast.error("Please fill all fields");
+      showError("Please fill all fields");
       return;
     }
 
@@ -30,7 +30,7 @@ export default function Register() {
 
     try {
       const firebaseUser = await signup(form.name, form.email, form.password);
-      toast.success("Account created successfully!");
+      showSuccess("Account created successfully!");
 
       let role = "client";
       try {
@@ -44,7 +44,7 @@ export default function Register() {
 
       router.replace(role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
-      toast.error(err.message || "Error creating account");
+      showError(err.message || "Error creating account");
     } finally {
       setLoading(false);
     }
@@ -54,10 +54,10 @@ export default function Register() {
     setLoading(true);
     try {
       const { role } = await loginWithGoogle();
-      toast.success("Signed in successfully!");
+      showSuccess("Signed in successfully!");
       router.replace(role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
-      toast.error(err.message || "Google sign-in failed");
+      showError(err.message || "Google sign-in failed");
     } finally {
       setLoading(false);
     }

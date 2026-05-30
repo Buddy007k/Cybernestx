@@ -1,6 +1,13 @@
 "use client";
 
-export default function ServiceList({ services, onEdit, onDelete }) {
+import Spinner from "@/components/ui/spinner";
+
+export default function ServiceList({
+  services,
+  onEdit,
+  onDelete,
+  deletingId = null,
+}) {
   return (
     <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
       <div className="overflow-x-auto">
@@ -32,7 +39,8 @@ export default function ServiceList({ services, onEdit, onDelete }) {
                   <div className="flex justify-end gap-3">
                     <button
                       onClick={() => onEdit(service)}
-                      className="text-indigo-600 hover:text-indigo-900 text-sm font-medium"
+                      disabled={deletingId === service.id}
+                      className="text-indigo-600 hover:text-indigo-900 text-sm font-medium disabled:opacity-50"
                     >
                       Edit
                     </button>
@@ -42,9 +50,17 @@ export default function ServiceList({ services, onEdit, onDelete }) {
                           onDelete(service.id);
                         }
                       }}
-                      className="text-red-600 hover:text-red-900 text-sm font-medium"
+                      disabled={deletingId === service.id}
+                      className="text-red-600 hover:text-red-900 text-sm font-medium disabled:opacity-50 inline-flex items-center gap-1"
                     >
-                      Delete
+                      {deletingId === service.id ? (
+                        <>
+                          <Spinner size="sm" />
+                          Deleting...
+                        </>
+                      ) : (
+                        "Delete"
+                      )}
                     </button>
                   </div>
                 </td>

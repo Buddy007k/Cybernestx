@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 import { useAuth } from "@/context/AuthContext";
 import { createRequest } from "@/lib/requests";
-import toast from "react-hot-toast";
+import { showSuccess, showError } from "@/lib/toast";
 
 export default function ServiceRequestButton({ serviceId, serviceName }) {
   const router = useRouter();
@@ -16,7 +17,7 @@ export default function ServiceRequestButton({ serviceId, serviceName }) {
     if (loading) return;
 
     if (!user) {
-      toast.error("Please log in to request this service");
+      showError("Please log in to request this service");
       router.push("/login");
       return;
     }
@@ -34,10 +35,10 @@ export default function ServiceRequestButton({ serviceId, serviceName }) {
         throw new Error(res.error || "Failed to submit request");
       }
 
-      toast.success("Service request submitted!");
+      showSuccess("Service request submitted!");
       router.push("/dashboard");
     } catch (err) {
-      toast.error(err.message || "Something went wrong");
+      showError(err.message || "Something went wrong");
     } finally {
       setSubmitting(false);
     }
@@ -48,9 +49,10 @@ export default function ServiceRequestButton({ serviceId, serviceName }) {
       <Button
         onClick={handleRequest}
         disabled={submitting || loading}
-        className="bg-orange-600 text-white hover:bg-orange-700 transition"
+        className="bg-orange-600 text-white hover:bg-orange-700 transition inline-flex items-center justify-center gap-2"
       >
-        {submitting ? "Submitting..." : "Request Service"}
+        {submitting && <Spinner size="sm" className="border-white border-t-transparent" />}
+        {submitting ? "Processing..." : "Request Service"}
       </Button>
     </div>
   );

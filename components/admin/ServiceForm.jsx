@@ -12,6 +12,8 @@ import {
   sanitizePricingPlansForSave,
 } from "@/lib/service-data";
 import Button from "@/components/ui/button";
+import { showError } from "@/lib/toast";
+import Spinner from "@/components/ui/spinner";
 
 export default function ServiceForm({
   initialData = null,
@@ -137,14 +139,14 @@ export default function ServiceForm({
     const hasImage = !!(formData.image || imageFile);
 
     if (!title || !slug || !description || !hasImage) {
-      alert("Please fill all required fields (title, slug, description, image).");
+      showError("Please fill all required fields (title, slug, description, image).");
       return;
     }
 
     try {
       const existing = await getServiceBySlug(slug);
       if (existing && existing.id !== initialData?.id) {
-        alert("Slug already exists. Please choose a unique slug.");
+        showError("Slug already exists. Please choose a unique slug.");
         return;
       }
     } catch {
@@ -157,7 +159,7 @@ export default function ServiceForm({
       try {
         imageUrl = await uploadImage(imageFile);
       } catch {
-        alert("Failed to upload image");
+        showError("Failed to upload image");
         return;
       }
     }
@@ -364,10 +366,15 @@ export default function ServiceForm({
       </div>
 
       <div className="flex flex-wrap gap-4 pt-4">
-        <Button type="submit" disabled={isLoading}>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="inline-flex items-center gap-2"
+        >
+          {isLoading && <Spinner size="sm" className="border-white border-t-transparent" />}
           {isLoading ? "Saving..." : initialData ? "Update Service" : "Create Service"}
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
           Cancel
         </Button>
       </div>

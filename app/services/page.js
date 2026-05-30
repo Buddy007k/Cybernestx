@@ -11,7 +11,17 @@ export default async function ServicesPage() {
   return (
     <>
       <ServicesHero />
-      <ServicesGrid services={services} />
+
+      {services && services.length > 0 ? (
+        <ServicesGrid services={services} />
+      ) : (
+        <div className="py-16 text-center">
+          <p className="text-muted text-lg">
+            No services available right now 🚀
+          </p>
+        </div>
+      )}
+
       <ServicesWhyUs />
       <ServicesCTA />
     </>

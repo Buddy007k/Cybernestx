@@ -1,8 +1,14 @@
 "use client";
 
+import Spinner from "@/components/ui/spinner";
+
 const STATUS_OPTIONS = ["pending", "in-progress", "completed"];
 
-export default function RequestList({ requests = [], onStatusChange }) {
+export default function RequestList({
+  requests = [],
+  onStatusChange,
+  updatingStatusId = null,
+}) {
   return (
     <div className="glass rounded-xl border border-[var(--border)] overflow-hidden">
       <div className="px-6 py-4 border-b border-[var(--border)]">
@@ -26,17 +32,23 @@ export default function RequestList({ requests = [], onStatusChange }) {
                 <td className="px-6 py-4 text-strong font-medium">{req.serviceName}</td>
                 <td className="px-6 py-4 text-muted text-sm">{req.userEmail}</td>
                 <td className="px-6 py-4">
-                  <select
-                    value={req.status || "pending"}
-                    onChange={(e) => onStatusChange(req.id, e.target.value)}
-                    className="input text-sm py-2 pr-8 capitalize"
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="flex items-center gap-2">
+                    <select
+                      value={req.status || "pending"}
+                      onChange={(e) => onStatusChange(req.id, e.target.value)}
+                      disabled={updatingStatusId === req.id}
+                      className="input text-sm py-2 pr-8 capitalize disabled:opacity-60"
+                    >
+                      {STATUS_OPTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                    {updatingStatusId === req.id && (
+                      <Spinner size="sm" />
+                    )}
+                  </div>
                 </td>
                 <td className="px-6 py-4 text-muted text-sm whitespace-nowrap">
                   {req.createdAt

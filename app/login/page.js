@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
 import GoogleSignInButton from "@/components/auth/google-sign-in-button";
 import { useAuth } from "@/context/AuthContext";
-import toast from "react-hot-toast";
+import { showSuccess, showError } from "@/lib/toast";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -17,7 +17,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (!form.email || !form.password) {
-      toast.error("Please fill all fields");
+      showError("Please fill all fields");
       return;
     }
 
@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       const firebaseUser = await login(form.email, form.password);
-      toast.success("Logged in successfully!");
+      showSuccess("Logged in successfully!");
 
       // Redirect based on role stored in Firestore
       let role = "client";
@@ -40,7 +40,7 @@ export default function Login() {
 
       router.replace(role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
-      toast.error(err.message || "Invalid credentials");
+      showError(err.message || "Invalid credentials");
     } finally {
       setLoading(false);
     }
@@ -50,10 +50,10 @@ export default function Login() {
     setLoading(true);
     try {
       const { role } = await loginWithGoogle();
-      toast.success("Logged in successfully!");
+      showSuccess("Logged in successfully!");
       router.replace(role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
-      toast.error(err.message || "Google sign-in failed");
+      showError(err.message || "Google sign-in failed");
     } finally {
       setLoading(false);
     }
