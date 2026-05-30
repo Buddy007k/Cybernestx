@@ -9,41 +9,60 @@ export default function ServiceList({
   deletingId = null,
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+    <div className="glass rounded-xl border border-[var(--border)] overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-gray-50 border-b">
+          
+          {/* HEADER */}
+          <thead className="bg-white/5 backdrop-blur-sm border-b border-[var(--border)]">
             <tr>
-              <th className="px-6 py-4 text-sm font-semibold text-gray-600">Service</th>
-              <th className="px-6 py-4 text-sm font-semibold text-gray-600">Slug</th>
-              <th className="px-6 py-4 text-sm font-semibold text-gray-600 text-right">Actions</th>
+              <th className="px-6 py-4 text-sm font-semibold text-muted">
+                Service
+              </th>
+              <th className="px-6 py-4 text-sm font-semibold text-muted">
+                Slug
+              </th>
+              <th className="px-6 py-4 text-sm font-semibold text-muted text-right">
+                Actions
+              </th>
             </tr>
           </thead>
-          <tbody className="divide-y">
+
+          {/* BODY */}
+          <tbody className="divide-y divide-[var(--border)]">
             {services.map((service) => (
-              <tr key={service.id} className="hover:bg-gray-50 transition">
+              <tr
+                key={service.id}
+                className="hover:bg-white/5 transition"
+              >
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
-                      className="w-10 h-10 rounded object-cover border"
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-10 h-10 rounded object-cover border border-[var(--border)]"
                     />
-                    <span className="font-medium text-gray-800">{service.title}</span>
+                    <span className="font-medium text-strong">
+                      {service.title}
+                    </span>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-gray-500 text-sm">
+
+                <td className="px-6 py-4 text-muted text-sm">
                   {service.slug}
                 </td>
+
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-3">
+                    
                     <button
                       onClick={() => onEdit(service)}
                       disabled={deletingId === service.id}
-                      className="text-indigo-600 hover:text-indigo-900 text-sm font-medium disabled:opacity-50"
+                      className="text-indigo-500 hover:text-indigo-400 text-sm font-medium disabled:opacity-50"
                     >
                       Edit
                     </button>
+
                     <button
                       onClick={() => {
                         if (confirm("Are you sure you want to delete this service?")) {
@@ -51,7 +70,7 @@ export default function ServiceList({
                         }
                       }}
                       disabled={deletingId === service.id}
-                      className="text-red-600 hover:text-red-900 text-sm font-medium disabled:opacity-50 inline-flex items-center gap-1"
+                      className="text-red-500 hover:text-red-400 text-sm font-medium disabled:opacity-50 inline-flex items-center gap-1"
                     >
                       {deletingId === service.id ? (
                         <>
@@ -62,18 +81,24 @@ export default function ServiceList({
                         "Delete"
                       )}
                     </button>
+
                   </div>
                 </td>
               </tr>
             ))}
+
             {services.length === 0 && (
               <tr>
-                <td colSpan="3" className="px-6 py-10 text-center text-gray-500">
+                <td
+                  colSpan="3"
+                  className="px-6 py-10 text-center text-muted"
+                >
                   No services found. Click "Add New Service" to get started.
                 </td>
               </tr>
             )}
           </tbody>
+
         </table>
       </div>
     </div>
