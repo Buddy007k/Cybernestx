@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import MobileSidebar from "./mobile-sidebar";
 import Button from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { getAllServices } from "@/lib/services";
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -16,7 +17,32 @@ export default function Navbar() {
   const router = useRouter();
   const { user, loading, logout } = useAuth();
 
-  useEffect(() => setMounted(true), []);
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+
+  // ✅ Mount fix
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // ✅ Fetch services (ONLY ONCE)
+  useEffect(() => {
+    async function loadServices() {
+      try {
+        const data = await getAllServices();
+        setServices(data || []);
+      } catch (err) {
+        console.error("Failed to load services:", err);
+        setServices([]);
+      } finally {
+        setServicesLoading(false);
+      }
+    }
+
+    loadServices();
+  }, []);
+
+  // ✅ AFTER all hooks
   if (!mounted) return null;
 
   const isDark = theme === "dark";
@@ -33,10 +59,11 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-[9999] backdrop-blur-xl border-b transition-all duration-300
-      ${isDark
+      ${
+        isDark
           ? "bg-black/70 border-white/10"
           : "bg-white/70 border-gray-200/60 shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
-        }`}
+      }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
@@ -56,130 +83,76 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Links */}
-        <div
-          className={`hidden md:flex gap-6 items-center font-medium ${isDark ? "text-white" : "text-gray-900"
-            }`}
-        >
-          <Link href="/" className="hover:text-indigo-600 transition">
-            Home
-          </Link>
-          <Link href="/about" className="hover:text-indigo-600 transition">
-            About
-          </Link>
-          {/* 🔥 SERVICES DROPDOWN */}
-          <div className="relative group">
+        <div className={`hidden md:flex gap-6 items-center font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
+          <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
 
-            <Link href="/services" className="hover:text-indigo-600 transition flex items-center gap-1">
-              Services
-              <span className="text-xs">▼</span>
+          {/* Services Dropdown */}
+          <div className="relative group">
+            <Link href="/services" className="flex items-center gap-1">
+              Services <span className="text-xs">▼</span>
             </Link>
 
-            {/* DROPDOWN */}
-            <div
-              className={`absolute left-0 mt-3 w-64 rounded-xl border shadow-xl opacity-0 invisible 
-      group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50
-      ${isDark
-                  ? "bg-black/90 border-white/10 backdrop-blur-xl"
-                  : "bg-white border-gray-200"
-                }`}
-            >
-
+            <div className={`absolute left-0 mt-3 w-64 rounded-xl border shadow-xl opacity-0 invisible 
+              group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50
+              ${isDark ? "bg-black/90 border-white/10" : "bg-white border-gray-200"}`}>
+              
               <div className="p-2 space-y-1 text-sm">
 
-                <Link
-                  href="/services/web-development"
-                  className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10 transition"
-                >
-                  Website Development
-                </Link>
+                {servicesLoading && (
+                  <p className="px-4 py-2 text-muted text-sm">Loading...</p>
+                )}
 
-                <Link
-                  href="/services/seo"
-                  className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10 transition"
-                >
-                  SEO Optimization
-                </Link>
+                {!servicesLoading && services.length === 0 && (
+                  <p className="px-4 py-2 text-muted text-sm">No services available</p>
+                )}
 
-                <Link
-                  href="/services/digital-marketing"
-                  className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10 transition"
-                >
-                  Digital Marketing
-                </Link>
-
-                <Link
-                  href="/services/ui-ux"
-                  className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10 transition"
-                >
-                  UI/UX Design
-                </Link>
-
-                <Link
-                  href="/services/ecommerce"
-                  className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10 transition"
-                >
-                  E-commerce Solutions
-                </Link>
+                {services.map((service) => (
+                  <Link
+                    key={service.id}
+                    href={`/services/${service.slug}`}
+                    className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10"
+                  >
+                    {service.title}
+                  </Link>
+                ))}
 
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Side */}
+        {/* Right */}
         <div className="flex items-center gap-3">
 
-          {/* Auth (desktop) */}
           {!loading && (
             <div className="hidden md:flex items-center gap-4">
               {!user ? (
                 <>
-                  <Link href="/login" className={navLinkClass}>
-                    Login
-                  </Link>
-                  <Link href="/register" className={navLinkClass}>
-                    Signup
-                  </Link>
+                  <Link href="/login">Login</Link>
+                  <Link href="/register">Signup</Link>
                 </>
               ) : (
                 <>
-                  {user.role === "admin" ? (
-                    <Link href="/admin" className={navLinkClass}>
-                      Admin
-                    </Link>
-                  ) : (
-                    <Link href="/dashboard" className={navLinkClass}>
-                      Dashboard
-                    </Link>
-                  )}
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className={navLinkClass}
-                  >
-                    Logout
-                  </button>
+                  <Link href={user.role === "admin" ? "/admin" : "/dashboard"}>
+                    {user.role === "admin" ? "Admin" : "Dashboard"}
+                  </Link>
+                  <button onClick={handleLogout}>Logout</button>
                 </>
               )}
             </div>
           )}
 
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className={`hover:scale-110 transition ${isDark ? "text-white" : "text-gray-900"
-              }`}
-          >
+          <button onClick={() => setTheme(isDark ? "light" : "dark")}>
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <Button href="/contact" variant="outline" className="hidden md:inline-flex border-orange-500 hover:bg-orange-600 transition">
+          <Button href="/contact" className="hidden md:inline-flex bg-orange-600 hover:bg-orange-700 transition">
             Contact
           </Button>
 
-          {/* Mobile */}
           <div className="md:hidden">
-            <MobileSidebar />
+            <MobileSidebar services={services} />
           </div>
         </div>
       </div>
