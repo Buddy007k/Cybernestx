@@ -1,7 +1,6 @@
 "use client";
 
 import ServicePricing from "./service-pricing";
-import ServiceRequestButton from "./service-request-button";
 import { Clock, Users, Target } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -27,8 +26,6 @@ export default function ServiceTemplate({
     <>
       {/* 🔥 HERO */}
       <section className="relative py-28 px-6 text-center overflow-hidden">
-
-        {/* gradient glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,115,0,0.15),transparent_40%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(99,102,241,0.15),transparent_40%)]" />
 
@@ -46,7 +43,7 @@ export default function ServiceTemplate({
           </p>
         </div>
 
-        {/* 🔥 STATS */}
+        {/* STATS */}
         <div className="relative mt-12 flex flex-wrap justify-center gap-6">
           {[
             { icon: Clock, title: "4-8 Weeks", sub: "Average Delivery" },
@@ -56,13 +53,11 @@ export default function ServiceTemplate({
             <div
               key={i}
               className={`flex items-center gap-4 px-6 py-4 rounded-xl border transition duration-300
-              
               ${
                 isDark
                   ? "bg-black/60 backdrop-blur-lg border-white/10 hover:shadow-xl hover:shadow-indigo-500/10"
                   : "bg-white border-gray-200 shadow-sm hover:shadow-xl hover:bg-gray-50"
-              }
-              `}
+              }`}
             >
               <item.icon className="text-orange-500" size={28} />
               <div className="text-left">
@@ -76,10 +71,9 @@ export default function ServiceTemplate({
         </div>
       </section>
 
-      {/* 🔥 THIN IMAGE BANNER */}
+      {/* IMAGE */}
       <section className="px-6">
         <div className="max-w-6xl mx-auto relative">
-
           <div className="absolute -inset-3 bg-orange-500/10 blur-2xl -z-10" />
 
           <img
@@ -90,10 +84,9 @@ export default function ServiceTemplate({
         </div>
       </section>
 
-      {/* 🔥 WHAT'S INCLUDED */}
+      {/* INCLUDED */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-strong">
             What's <span className="text-orange-500">Included</span>
           </h2>
@@ -103,13 +96,11 @@ export default function ServiceTemplate({
               <div
                 key={i}
                 className={`flex gap-4 p-6 rounded-2xl border transition duration-300
-                
                 ${
                   isDark
                     ? "bg-black/60 backdrop-blur-lg border-white/10 hover:shadow-xl hover:shadow-indigo-500/10"
                     : "bg-white border-gray-200 shadow-sm hover:shadow-xl hover:bg-gray-50"
-                }
-                `}
+                }`}
               >
                 <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
                   ✔
@@ -119,9 +110,11 @@ export default function ServiceTemplate({
                   <h3 className="text-lg font-semibold text-strong mb-1">
                     {item.title}
                   </h3>
-                  {item.description ? (
-                    <p className="text-sm text-muted">{item.description}</p>
-                  ) : null}
+                  {item.description && (
+                    <p className="text-sm text-muted">
+                      {item.description}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -129,18 +122,14 @@ export default function ServiceTemplate({
         </div>
       </section>
 
-      {/* 🔥 PRICING */}
-      <ServicePricing pricingPlans={pricingPlans} />
+      {/* ✅ PRICING (UPDATED) */}
+      <ServicePricing
+        pricingPlans={pricingPlans}
+        serviceId={serviceId}
+        serviceName={title}
+      />
 
-      {serviceId && (
-        <section className="px-6 pb-8">
-          <div className="max-w-6xl mx-auto">
-            <ServiceRequestButton serviceId={serviceId} serviceName={title} />
-          </div>
-        </section>
-      )}
-
-      {/* 🔥 OUTCOME */}
+      {/* OUTCOME */}
       <section className="py-20 text-center px-6">
         <p className="text-xl text-strong max-w-3xl mx-auto leading-relaxed">
           👉 {outcome}
