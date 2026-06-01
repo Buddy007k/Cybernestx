@@ -15,46 +15,45 @@ export default function Reviews() {
 
   const reviews = [
     {
-      name: "Michael Chen",
-      text: "Working with this team was an absolute pleasure. They delivered beyond expectations and the results speak for themselves.",
+      name: "Shubham Rajput",
+      text: "Very excellent service  I am fully satisfied and recommend everyone.",
       rating: 5,
     },
     {
-      name: "Emily Rodriguez",
-      text: "The level of professionalism and creativity they brought to our project was outstanding. Our brand has never looked better!",
+      name: "YASHU BHARDWAJ",
+      text: "Cybernestx did an amazing job building our website. They listened to our requirements, offered great suggestions, and completed the project ahead of schedule. The communication was smooth throughout. We’re thrilled with the final result!",
       rating: 5,
     },
     {
-      name: "Sarah Johnson",
-      text: "They transformed our digital presence completely. Our conversion rate increased massively!",
-      rating: 4,
-    },
-    {
-      name: "James Wilson",
-      text: "Best decision we made was partnering with them. They’re not just developers, they’re strategic partners.",
+      name: "Anuj Roy",
+      text: "Best Service ⚡\nI recommend to everyone 💥 …",
       rating: 5,
     },
     {
-      name: "David Park",
-      text: "Their technical skills are top-notch. They built a scalable system that performs flawlessly.",
-      rating: 4,
+      name: "Preeti Sharma",
+      text: "Great service and excellent team! Highly recommend in for web and digital solutions.👌 …",
+      rating: 5,
     },
     {
-      name: "Olivia Brown",
-      text: "From start to finish, everything was smooth. Highly professional team.",
+      name: "Kritika Singh",
+      text: "Every one recommend it.very good service",
+      rating: 5,
+    },
+    {
+      name: "Ãshûtøsh Bhãrdwãj",
+      text: "Best web development service with professional support and quality work. Highly recommended to everyone for reliable and modern websites.",
       rating: 5,
     },
   ];
 
   const ReviewCard = ({ review }) => (
     <div
-      className={`min-w-[320px] md:min-w-[360px] max-w-[360px] p-6 rounded-2xl mx-4 transition ${
-        isDark
+      className={`min-w-[320px] md:min-w-[360px] max-w-[360px] p-6 rounded-2xl mx-4 transition ${isDark
           ? "bg-white/5 border border-white/10"
           : "bg-white border border-gray-200 shadow-sm"
-      }`}
+        }`}
     >
-      <p className="text-sm text-muted mb-6 leading-relaxed">
+      <p className="text-sm text-muted mb-6 leading-relaxed whitespace-pre-line">
         “{review.text}”
       </p>
 
