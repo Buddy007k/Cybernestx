@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { FaTwitter, FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaPinterest, FaFacebookF, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   const { theme } = useTheme();
@@ -21,11 +21,10 @@ export default function Footer() {
       {/* 🔥 BACKGROUND */}
       <div className="absolute inset-0 -z-10">
         <div
-          className={`absolute inset-0 ${
-            isDark
-              ? "bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]"
-              : "bg-gradient-to-br from-white via-gray-50 to-white"
-          }`}
+          className={`absolute inset-0 ${isDark
+            ? "bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]"
+            : "bg-gradient-to-br from-white via-gray-50 to-white"
+            }`}
         />
 
         {/* subtle glow */}
@@ -61,19 +60,75 @@ export default function Footer() {
 
           {/* SOCIAL */}
           <div className="flex gap-4 pt-2">
-            {[FaTwitter, FaLinkedin, FaGithub, FaInstagram].map((Icon, i) => (
-              <div
-                key={i}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition cursor-pointer border
-                ${
-                  isDark
-                    ? "border-white/10 hover:bg-white/10 text-white"
-                    : "border-gray-300 hover:bg-gray-100 text-black"
-                }`}
-              >
-                <Icon size={16} />
-              </div>
-            ))}
+
+            {/* Pinterest */}
+            <a
+              href="https://pin.it/2VDlSF04f"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
+                ${isDark
+                  ? "border-white/10 text-white"
+                  : "border-gray-300 text-black"
+                } hover:border-[#E60023] hover:bg-[#E60023]`}
+            >
+              <FaPinterest
+                size={16}
+                className="transition group-hover:text-white"
+              />
+            </a>
+
+            {/* Facebook */}
+            <a
+              href="https://www.facebook.com/share/18iT4qE3H6/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
+                ${isDark
+                  ? "border-white/10 text-white"
+                  : "border-gray-300 text-black"
+                } hover:border-[#1877F2] hover:bg-[#1877F2]`}
+            >
+              <FaFacebookF
+                size={16}
+                className="transition group-hover:text-white"
+              />
+            </a>
+
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/cybernestx.in?igsh=NXU5a3Q0ejdya3Fo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
+                ${isDark
+                  ? "border-white/10 text-white"
+                  : "border-gray-300 text-black"
+                } hover:border-pink-500 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600`}
+            >
+              <FaInstagram
+                size={16}
+                className="transition group-hover:text-white"
+              />
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/cybernest-x/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
+              ${isDark
+                  ? "border-white/10 text-white"
+                  : "border-gray-300 text-black"
+                } hover:border-[#0A66C2] hover:bg-[#0A66C2]`}
+            >
+              <FaLinkedin
+                size={16}
+                className="transition group-hover:text-white"
+              />
+            </a>
+
           </div>
         </div>
 
@@ -126,7 +181,7 @@ export default function Footer() {
               <p>
                 Cybernestx
                 20th mile, Jatheri Rd, Sector 38,<br />
-                Sonipat, Haryana 131029 
+                Sonipat, Haryana 131029
               </p>
             </div>
           </div>

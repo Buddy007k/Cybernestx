@@ -25,9 +25,9 @@ export default function Portfolio() {
       link: "https://dolindecor.com/",
     },
     {
-      title: "Eduverse Education",
+      title: "Bunkin Store",
       img: "/assets/p3.png",
-      link: "https://www.eduverseuniverseofeducation.com/",
+      link: "https://bunkinstore.com/",
     },
   ];
 
