@@ -148,7 +148,7 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-5 text-strong">Services</h3>
           <div className="flex flex-col gap-3 text-sm text-muted">
-            <Link href="/services/web-development" className="hover:text-orange-500  transition">Website Development</Link>
+            <Link href="/services/website-development" className="hover:text-orange-500  transition">Website Development</Link>
             <Link href="/services/seo" className="hover:text-orange-500 transition">SEO Optimization</Link>
             <Link href="/services/digital-marketing" className="hover:text-orange-500 transition">Digital Marketing</Link>
             <Link href="/services/ui-ux" className="hover:text-orange-500 transition">UI/UX Design</Link>
