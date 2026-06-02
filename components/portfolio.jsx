@@ -25,9 +25,9 @@ export default function Portfolio() {
       link: "https://dolindecor.com/",
     },
     {
-      title: "Bunkin Store",
+      title: "Odarts",
       img: "/assets/p3.png",
-      link: "https://bunkinstore.com/",
+      link: "https://odarts.com/",
     },
   ];
 
