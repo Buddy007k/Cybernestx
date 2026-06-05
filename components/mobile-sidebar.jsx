@@ -24,7 +24,7 @@ export default function MobileSidebar({ services = [] }) {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
-    { name: "Services", path: "/services" }, // ✅ no children here
+    { name: "Services", path: "/services" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -102,27 +102,32 @@ export default function MobileSidebar({ services = [] }) {
                     <div key={item.name}>
 
                       {/* MAIN BUTTON */}
-                      <button
-                        onClick={() => {
-                          if (item.name === "Services") {
-                            setOpenDropdown(!openDropdown);
-                          } else {
-                            handleNav(item.path);
-                          }
-                        }}
-                        className={`w-full flex justify-between items-center text-left px-4 py-2 rounded-lg font-medium transition ${
-                          isDark
-                            ? "text-gray-200 hover:bg-white/10 hover:text-white"
-                            : "text-gray-800 hover:bg-gray-100 hover:text-indigo-600"
-                        }`}
-                      >
-                        {item.name}
-                        {item.name === "Services" && (
-                          <span className="text-xs">▼</span>
-                        )}
-                      </button>
+                      <div className="flex items-center justify-between">
+                        
+                        {/* ✅ CLICK TEXT → NAVIGATE */}
+                        <button
+                          onClick={() => handleNav(item.path)}
+                          className={`flex-1 text-left px-4 py-2 rounded-lg font-medium transition ${
+                            isDark
+                              ? "text-gray-200 hover:bg-white/10 hover:text-white"
+                              : "text-gray-800 hover:bg-gray-100 hover:text-indigo-600"
+                          }`}
+                        >
+                          {item.name}
+                        </button>
 
-                      {/* ✅ DYNAMIC SERVICES DROPDOWN */}
+                        {/* ✅ SEPARATE DROPDOWN ICON */}
+                        {item.name === "Services" && (
+                          <button
+                            onClick={() => setOpenDropdown(!openDropdown)}
+                            className="px-2 text-xs opacity-70"
+                          >
+                            ▼
+                          </button>
+                        )}
+                      </div>
+
+                      {/* ✅ SERVICES DROPDOWN */}
                       {item.name === "Services" && openDropdown && (
                         <div className="ml-4 mt-2 space-y-2">
 
@@ -135,7 +140,9 @@ export default function MobileSidebar({ services = [] }) {
                           {services.map((service) => (
                             <button
                               key={service.id}
-                              onClick={() => handleNav(`/services/${service.slug}`)}
+                              onClick={() =>
+                                handleNav(`/services/${service.slug}`)
+                              }
                               className={`block w-full text-left px-3 py-2 text-sm rounded-md transition ${
                                 isDark
                                   ? "text-gray-400 hover:text-white hover:bg-white/10"
