@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { normalizeFeatures } from "@/lib/service-data";
+import { FaCheck } from "react-icons/fa";
 
 export default function ServicesGrid({ services = [] }) {
   return (
@@ -54,7 +55,7 @@ export default function ServicesGrid({ services = [] }) {
                       .map((feature, idx) => (
                         <div key={idx} className="space-y-0.5">
                           <p className="text-muted flex items-center gap-2">
-                            ✔ <span className="font-medium text-strong">{feature.title}</span>
+                            <FaCheck className="text-orange-500 text-lg" /> <span className="font-medium text-strong">{feature.title}</span>
                           </p>
                           {feature.description ? (
                             <p className="text-sm text-muted pl-6">

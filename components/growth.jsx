@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { FaCheck } from "react-icons/fa";
 
 export default function Growth() {
   const { theme } = useTheme();
@@ -40,7 +41,7 @@ export default function Growth() {
                     : "bg-gray-50 hover:bg-gray-100"
                 }`}
               >
-                <span className="text-indigo-500 text-lg">✔</span>
+                <FaCheck className="text-orange-500 text-lg" />
                 <span className="text-strong">{item}</span>
               </div>
             ))}

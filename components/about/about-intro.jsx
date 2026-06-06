@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { FaCheck } from "react-icons/fa";
 
 export default function AboutIntro() {
   const { theme } = useTheme();
@@ -65,9 +66,9 @@ export default function AboutIntro() {
           </p>
 
           <div className="space-y-3">
-            <p className="flex gap-2 text-muted">✔ Easily Scale Your Business Growth</p>
-            <p className="flex gap-2 text-muted">✔ Simplified Digital Transformation</p>
-            <p className="flex gap-2 text-muted">✔ Solutions for the Competitive Edge</p>
+            <p className="flex gap-2 text-muted"><FaCheck className="text-orange-500 text-lg" /> Easily Scale Your Business Growth</p>
+            <p className="flex gap-2 text-muted"><FaCheck className="text-orange-500 text-lg" /> Simplified Digital Transformation</p>
+            <p className="flex gap-2 text-muted"><FaCheck className="text-orange-500 text-lg" /> Solutions for the Competitive Edge</p>
           </div>
 
         </div>

@@ -112,7 +112,7 @@ export default function Login() {
         <Button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full"
+          className="w-full bg-orange-600 text-white hover:bg-orange-700 transition"
         >
           {loading ? "Logging in..." : "Login"}
         </Button>
@@ -121,7 +121,7 @@ export default function Login() {
           Don’t have an account?{" "}
           <span
             onClick={() => router.push("/register")}
-            className="text-indigo-600 cursor-pointer hover:underline font-medium"
+            className="text-orange-600 cursor-pointer hover:underline font-medium"
           >
             Register
           </span>

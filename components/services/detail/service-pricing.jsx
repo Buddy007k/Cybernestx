@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "@/components/ui/spinner";
 import { createRequest } from "@/lib/requests";
 import { showSuccess, showError } from "@/lib/toast";
+import { FaCheck } from "react-icons/fa";
 
 import {
   formatDiscountedPrice,
@@ -136,7 +137,7 @@ export default function ServicePricing({
               <div className="space-y-3 mb-8">
                 {(plan.features || []).map((f, idx) => (
                   <p key={idx} className="text-muted flex gap-2">
-                    ✔ {f}
+                    <FaCheck className="text-orange-500 text-lg" /> {f}
                   </p>
                 ))}
               </div>

@@ -1,5 +1,7 @@
 "use client";
 
+import { FaCheck } from "react-icons/fa";
+
 export default function ServicesWhyUs() {
   const points = [
     "End-to-End Digital & E-commerce Solutions",
@@ -27,7 +29,7 @@ export default function ServicesWhyUs() {
           <div className="space-y-3">
             {points.map((p, i) => (
               <p key={i} className="flex items-center gap-2 text-muted">
-                ✔ {p}
+                <FaCheck className="text-orange-500 text-lg" /> {p}
               </p>
             ))}
           </div>

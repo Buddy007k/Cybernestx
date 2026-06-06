@@ -4,6 +4,7 @@ import ServicePricing from "./service-pricing";
 import { Clock, Users, Target } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { FaCheck } from "react-icons/fa";
 
 export default function ServiceTemplate({
   title,
@@ -103,7 +104,7 @@ export default function ServiceTemplate({
                 }`}
               >
                 <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-orange-500/10 text-orange-500">
-                  ✔
+                  <FaCheck />
                 </div>
 
                 <div>

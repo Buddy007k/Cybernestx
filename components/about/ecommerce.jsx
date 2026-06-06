@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { ShoppingCart, TrendingUp, Package, BarChart3 } from "lucide-react";
+import { FaCheck } from "react-icons/fa";
 
 export default function Ecommerce() {
   const { theme } = useTheme();
@@ -77,14 +78,14 @@ export default function Ecommerce() {
           <div className="grid sm:grid-cols-2 gap-3 pt-4">
             {features.map((item, i) => (
               <p key={i} className="text-sm text-muted flex items-start gap-2">
-                <span className="text-orange-500">✔</span> {item}
+                <FaCheck className="text-orange-500 text-lg" /> {item}
               </p>
             ))}
           </div>
 
-          <button className="mt-6 px-6 py-3 rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition">
+          {/* <button className="mt-6 px-6 py-3 rounded-lg bg-orange-600 text-white hover:bg-orange-700 transition">
             Start Selling →
-          </button>
+          </button> */}
         </div>
 
         {/* ================= RIGHT SIDE ================= */}

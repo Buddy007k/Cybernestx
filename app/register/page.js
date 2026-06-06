@@ -114,7 +114,7 @@ export default function Register() {
           className="w-full p-3 border rounded-lg text-strong focus:outline-none focus:ring-2 focus:ring-sky-500"
         />
 
-        <Button onClick={handleRegister} disabled={loading} className="w-full">
+        <Button onClick={handleRegister} disabled={loading} className="w-full bg-orange-600 text-white hover:bg-orange-700 transition">
           {loading ? "Creating..." : "Register"}
         </Button>
 
@@ -122,7 +122,7 @@ export default function Register() {
           Already have an account?{" "}
           <span
             onClick={() => router.push("/login")}
-            className="text-indigo-600 cursor-pointer hover:underline"
+            className="text-orange-600 cursor-pointer hover:underline"
           >
             Login
           </span>
