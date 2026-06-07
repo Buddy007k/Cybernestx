@@ -5,12 +5,29 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { FaPinterest, FaFacebookF, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { getAllServices } from "@/lib/services"; // ✅ IMPORT
 
 export default function Footer() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [services, setServices] = useState([]); // ✅ STATE
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+
+    // ✅ FETCH SERVICES
+    const fetchServices = async () => {
+      try {
+        const data = await getAllServices();
+        setServices(data.slice(0, 5)); // 🔥 LIMIT TO 5
+      } catch (err) {
+        console.error("Footer services fetch error:", err);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
   if (!mounted) return null;
 
   const isDark = theme === "dark";
@@ -21,13 +38,13 @@ export default function Footer() {
       {/* 🔥 BACKGROUND */}
       <div className="absolute inset-0 -z-10">
         <div
-          className={`absolute inset-0 ${isDark
-            ? "bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]"
-            : "bg-gradient-to-br from-white via-gray-50 to-white"
-            }`}
+          className={`absolute inset-0 ${
+            isDark
+              ? "bg-gradient-to-br from-[#020617] via-[#020617] to-[#020617]"
+              : "bg-gradient-to-br from-white via-gray-50 to-white"
+          }`}
         />
 
-        {/* subtle glow */}
         <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-indigo-500/10 blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-sky-500/10 blur-[120px]" />
       </div>
@@ -35,10 +52,8 @@ export default function Footer() {
       {/* MAIN GRID */}
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
 
-        {/* 🔥 BRAND */}
+        {/* BRAND */}
         <div className="space-y-6">
-
-          {/* LOGO */}
           <Link href="/" className="inline-block">
             <Image
               src={
@@ -60,75 +75,49 @@ export default function Footer() {
 
           {/* SOCIAL */}
           <div className="flex gap-4 pt-2">
-
-            {/* Pinterest */}
             <a
               href="https://pin.it/2VDlSF04f"
               target="_blank"
               rel="noopener noreferrer"
               className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
-                ${isDark
-                  ? "border-white/10 text-white"
-                  : "border-gray-300 text-black"
-                } hover:border-[#E60023] hover:bg-[#E60023]`}
+              ${isDark ? "border-white/10 text-white" : "border-gray-300 text-black"}
+              hover:border-[#E60023] hover:bg-[#E60023]`}
             >
-              <FaPinterest
-                size={16}
-                className="transition group-hover:text-white"
-              />
+              <FaPinterest size={16} className="group-hover:text-white" />
             </a>
 
-            {/* Facebook */}
             <a
               href="https://www.facebook.com/share/18iT4qE3H6/"
               target="_blank"
               rel="noopener noreferrer"
               className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
-                ${isDark
-                  ? "border-white/10 text-white"
-                  : "border-gray-300 text-black"
-                } hover:border-[#1877F2] hover:bg-[#1877F2]`}
+              ${isDark ? "border-white/10 text-white" : "border-gray-300 text-black"}
+              hover:border-[#1877F2] hover:bg-[#1877F2]`}
             >
-              <FaFacebookF
-                size={16}
-                className="transition group-hover:text-white"
-              />
+              <FaFacebookF size={16} className="group-hover:text-white" />
             </a>
 
-            {/* Instagram */}
             <a
-              href="https://www.instagram.com/cybernestx.in?igsh=NXU5a3Q0ejdya3Fo"
+              href="https://www.instagram.com/cybernestx.in"
               target="_blank"
               rel="noopener noreferrer"
               className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
-                ${isDark
-                  ? "border-white/10 text-white"
-                  : "border-gray-300 text-black"
-                } hover:border-pink-500 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600`}
+              ${isDark ? "border-white/10 text-white" : "border-gray-300 text-black"}
+              hover:border-pink-500 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-600`}
             >
-              <FaInstagram
-                size={16}
-                className="transition group-hover:text-white"
-              />
+              <FaInstagram size={16} className="group-hover:text-white" />
             </a>
 
-            {/* LinkedIn */}
             <a
               href="https://www.linkedin.com/company/cybernest-x/"
               target="_blank"
               rel="noopener noreferrer"
               className={`group w-10 h-10 rounded-full flex items-center justify-center transition border
-              ${isDark
-                  ? "border-white/10 text-white"
-                  : "border-gray-300 text-black"
-                } hover:border-[#0A66C2] hover:bg-[#0A66C2]`}
+              ${isDark ? "border-white/10 text-white" : "border-gray-300 text-black"}
+              hover:border-[#0A66C2] hover:bg-[#0A66C2]`}
             >
-              <FaLinkedin
-                size={16}
-                className="transition group-hover:text-white"
-              />
+              <FaLinkedin size={16} className="group-hover:text-white" />
             </a>
-
           </div>
         </div>
 
@@ -136,23 +125,31 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-5 text-strong">Company</h3>
           <div className="flex flex-col gap-3 text-sm text-muted">
-            <Link href="/about" className="hover:text-orange-500 transition">About Us</Link>
-            {/* <Link href="#" className="hover:text-orange-500 transition">Blog</Link> */}
-            <Link href="/privacy-policy" className="hover:text-orange-500 transition">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-orange-500 transition">Terms & Conditions</Link>
-            <Link href="/contact" className="hover:text-orange-500 transition">Contact</Link>
+            <Link href="/about" className="hover:text-orange-500">About Us</Link>
+            <Link href="/privacy-policy" className="hover:text-orange-500">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-orange-500">Terms</Link>
+            <Link href="/contact" className="hover:text-orange-500">Contact</Link>
           </div>
         </div>
 
-        {/* SERVICES */}
+        {/* ✅ DYNAMIC SERVICES */}
         <div>
           <h3 className="font-semibold mb-5 text-strong">Services</h3>
+
           <div className="flex flex-col gap-3 text-sm text-muted">
-            <Link href="/services/website-development" className="hover:text-orange-500  transition">Website Development</Link>
-            <Link href="/services/seo" className="hover:text-orange-500 transition">SEO Optimization</Link>
-            <Link href="/services/digital-marketing" className="hover:text-orange-500 transition">Digital Marketing</Link>
-            <Link href="/services/ui-ux" className="hover:text-orange-500 transition">UI/UX Design</Link>
-            <Link href="/services/ecommerce" className="hover:text-orange-500 transition">E-commerce Management</Link>
+            {services.length > 0 ? (
+              services.map((service) => (
+                <Link
+                  key={service.id}
+                  href={`/services/${service.slug}`}
+                  className="hover:text-orange-500 transition"
+                >
+                  {service.title}
+                </Link>
+              ))
+            ) : (
+              <p className="text-sm text-muted">Loading services...</p>
+            )}
           </div>
         </div>
 
@@ -197,7 +194,7 @@ export default function Footer() {
 
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="hover:text-primary transition"
+          className="hover:text-primary"
         >
           Back to top ↑
         </button>

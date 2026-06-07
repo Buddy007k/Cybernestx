@@ -20,8 +20,8 @@ export default function Reviews() {
       rating: 5,
     },
     {
-      name: "YASHU BHARDWAJ",
-      text: "Cybernestx did an amazing job building our website. They listened to our requirements, offered great suggestions, and completed the project ahead of schedule. The communication was smooth throughout. We’re thrilled with the final result!",
+      name: "Aditya Verma",
+      text: "Good service \nBest environments \nEveryone recommend it",
       rating: 5,
     },
     {
