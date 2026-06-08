@@ -5,6 +5,8 @@ const STATUS_STYLES = {
     "bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30",
   completed:
     "bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30",
+  cancelled:
+    "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30",
 };
 
 export default function RequestStatusBadge({ status = "pending" }) {

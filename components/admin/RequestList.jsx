@@ -2,7 +2,7 @@
 
 import Spinner from "@/components/ui/spinner";
 
-const STATUS_OPTIONS = ["pending", "in-progress", "completed"];
+const STATUS_OPTIONS = ["pending", "in-progress", "completed", "cancelled"];
 
 export default function RequestList({
   requests = [],
