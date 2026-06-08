@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import MobileSidebar from "./mobile-sidebar";
 import Button from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
@@ -15,17 +15,16 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const { user, loading, logout } = useAuth();
 
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
 
-  // ✅ Mount fix
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // ✅ Fetch services (ONLY ONCE)
   useEffect(() => {
     async function loadServices() {
       try {
@@ -42,7 +41,6 @@ export default function Navbar() {
     loadServices();
   }, []);
 
-  // ✅ AFTER all hooks
   if (!mounted) return null;
 
   const isDark = theme === "dark";
@@ -52,9 +50,21 @@ export default function Navbar() {
     router.push("/");
   };
 
-  const navLinkClass = `hover:text-indigo-600 transition font-medium ${
-    isDark ? "text-white" : "text-gray-900"
-  }`;
+  // 🔥 ACTIVE LINK STYLE
+  const getLinkClass = (path) => {
+    const isActive =
+      path === "/"
+        ? pathname === "/"
+        : pathname.startsWith(path);
+
+    return `transition font-medium ${
+      isActive
+        ? "text-orange-500 font-semibold"
+        : isDark
+        ? "text-white hover:text-indigo-400"
+        : "text-gray-900 hover:text-indigo-600"
+    }`;
+  };
 
   return (
     <nav
@@ -83,20 +93,31 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Links */}
-        <div className={`hidden md:flex gap-6 items-center font-medium ${isDark ? "text-white" : "text-gray-900"}`}>
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
+        <div className="hidden md:flex gap-6 items-center">
 
-          {/* Services Dropdown */}
+          <Link href="/" className={getLinkClass("/")}>
+            Home
+          </Link>
+
+          <Link href="/about" className={getLinkClass("/about")}>
+            About
+          </Link>
+
+          {/* SERVICES */}
           <div className="relative group">
-            <Link href="/services" className="flex items-center gap-1">
+            <Link
+              href="/services"
+              className={`flex items-center gap-1 ${getLinkClass("/services")}`}
+            >
               Services <span className="text-xs">▼</span>
             </Link>
 
-            <div className={`absolute left-0 mt-3 w-64 rounded-xl border shadow-xl opacity-0 invisible 
+            {/* DROPDOWN */}
+            <div
+              className={`absolute left-0 mt-3 w-64 rounded-xl border shadow-xl opacity-0 invisible 
               group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50
-              ${isDark ? "bg-black/90 border-white/10" : "bg-white border-gray-200"}`}>
-              
+              ${isDark ? "bg-black/90 border-white/10" : "bg-white border-gray-200"}`}
+            >
               <div className="p-2 space-y-1 text-sm">
 
                 {servicesLoading && (
@@ -104,53 +125,75 @@ export default function Navbar() {
                 )}
 
                 {!servicesLoading && services.length === 0 && (
-                  <p className="px-4 py-2 text-muted text-sm">No services available</p>
+                  <p className="px-4 py-2 text-muted text-sm">
+                    No services available
+                  </p>
                 )}
 
-                {services.map((service) => (
-                  <Link
-                    key={service.id}
-                    href={`/services/${service.slug}`}
-                    className="block px-4 py-2 rounded-lg hover:bg-indigo-500/10"
-                  >
-                    {service.title}
-                  </Link>
-                ))}
+                {services.map((service) => {
+                  const isActive = pathname === `/services/${service.slug}`;
 
+                  return (
+                    <Link
+                      key={service.id}
+                      href={`/services/${service.slug}`}
+                      className={`block px-4 py-2 rounded-lg transition ${
+                        isActive
+                          ? "bg-orange-500/10 text-orange-500 font-medium"
+                          : "hover:bg-indigo-500/10"
+                      }`}
+                    >
+                      {service.title}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
+
+          <Link href="/contact" className={getLinkClass("/contact")}>
+            Contact
+          </Link>
+
         </div>
 
-        {/* Right */}
+        {/* RIGHT */}
         <div className="flex items-center gap-3">
 
-          {!loading && (
-            <div className="hidden md:flex items-center gap-4">
-              {!user ? (
-                <>
-                  <Link href="/login">Login</Link>
-                  <Link href="/register">Signup</Link>
-                </>
-              ) : (
-                <>
-                  <Link href={user.role === "admin" ? "/admin" : "/dashboard"}>
-                    {user.role === "admin" ? "Admin" : "Dashboard"}
-                  </Link>
-                  <button onClick={handleLogout}>Logout</button>
-                </>
-              )}
-            </div>
+          {/* ✅ ONLY LOGOUT (no duplicate dashboard/admin link) */}
+          {!loading && user && (
+            <button
+              onClick={handleLogout}
+              className="hidden md:block text-sm text-red-500 hover:underline"
+            >
+              Logout
+            </button>
           )}
 
+          {/* THEME */}
           <button onClick={() => setTheme(isDark ? "light" : "dark")}>
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
-          <Button href="/contact" className="hidden md:inline-flex bg-orange-600 hover:bg-orange-700 transition">
-            Contact
+          {/* ✅ CTA (Single source of truth) */}
+          <Button
+            href={
+              !user
+                ? "/login"
+                : user.role === "admin"
+                ? "/admin"
+                : "/dashboard"
+            }
+            className="hidden md:inline-flex bg-orange-600 hover:bg-orange-700 transition"
+          >
+            {!user
+              ? "Get Started"
+              : user.role === "admin"
+              ? "Admin Panel"
+              : "Dashboard"}
           </Button>
 
+          {/* MOBILE */}
           <div className="md:hidden">
             <MobileSidebar services={services} />
           </div>

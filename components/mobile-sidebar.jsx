@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/context/AuthContext";
@@ -12,6 +12,7 @@ export default function MobileSidebar({ services = [] }) {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const router = useRouter();
+  const pathname = usePathname(); // ✅ for highlighting
   const { theme } = useTheme();
   const { user, loading, logout } = useAuth();
 
@@ -37,6 +38,22 @@ export default function MobileSidebar({ services = [] }) {
     await logout();
     router.push("/");
     setOpen(false);
+  };
+
+  // 🔥 ACTIVE STYLE
+  const getLinkClass = (path) => {
+    const isActive =
+      path === "/"
+        ? pathname === "/"
+        : pathname.startsWith(path);
+
+    return `flex-1 text-left px-4 py-2 rounded-lg font-medium transition ${
+      isActive
+        ? "bg-orange-500/10 text-orange-500"
+        : isDark
+        ? "text-gray-200 hover:bg-white/10 hover:text-white"
+        : "text-gray-800 hover:bg-gray-100 hover:text-indigo-600"
+    }`;
   };
 
   return (
@@ -71,12 +88,12 @@ export default function MobileSidebar({ services = [] }) {
 
             {/* SIDEBAR */}
             <div
-              className={`fixed top-0 left-0 h-full w-[270px] z-[1000]
+              className={`fixed top-0 left-0 h-full w-[280px] z-[1000]
               transform transition-transform duration-300
               ${open ? "translate-x-0" : "-translate-x-full"}
               ${
                 isDark
-                  ? "bg-black/85 border-white/10"
+                  ? "bg-black/90 border-white/10"
                   : "bg-white border-gray-200 shadow-xl"
               }
               backdrop-blur-xl border-r`}
@@ -96,40 +113,36 @@ export default function MobileSidebar({ services = [] }) {
                   </button>
                 </div>
 
-                {/* NAV LINKS */}
-                <div className="flex flex-col gap-3">
+                {/* NAV */}
+                <div className="flex flex-col gap-2">
+
                   {navItems.map((item) => (
                     <div key={item.name}>
 
-                      {/* MAIN BUTTON */}
                       <div className="flex items-center justify-between">
-                        
-                        {/* ✅ CLICK TEXT → NAVIGATE */}
+
+                        {/* MAIN LINK */}
                         <button
                           onClick={() => handleNav(item.path)}
-                          className={`flex-1 text-left px-4 py-2 rounded-lg font-medium transition ${
-                            isDark
-                              ? "text-gray-200 hover:bg-white/10 hover:text-white"
-                              : "text-gray-800 hover:bg-gray-100 hover:text-indigo-600"
-                          }`}
+                          className={getLinkClass(item.path)}
                         >
                           {item.name}
                         </button>
 
-                        {/* ✅ SEPARATE DROPDOWN ICON */}
+                        {/* SERVICES DROPDOWN */}
                         {item.name === "Services" && (
                           <button
                             onClick={() => setOpenDropdown(!openDropdown)}
                             className="px-2 text-xs opacity-70"
                           >
-                            ▼
+                            {openDropdown ? "▲" : "▼"}
                           </button>
                         )}
                       </div>
 
-                      {/* ✅ SERVICES DROPDOWN */}
+                      {/* DROPDOWN ITEMS */}
                       {item.name === "Services" && openDropdown && (
-                        <div className="ml-4 mt-2 space-y-2">
+                        <div className="ml-4 mt-2 space-y-1">
 
                           {services.length === 0 && (
                             <p className="text-sm text-muted px-3 py-2">
@@ -137,58 +150,66 @@ export default function MobileSidebar({ services = [] }) {
                             </p>
                           )}
 
-                          {services.map((service) => (
-                            <button
-                              key={service.id}
-                              onClick={() =>
-                                handleNav(`/services/${service.slug}`)
-                              }
-                              className={`block w-full text-left px-3 py-2 text-sm rounded-md transition ${
-                                isDark
-                                  ? "text-gray-400 hover:text-white hover:bg-white/10"
-                                  : "text-gray-600 hover:text-indigo-600 hover:bg-gray-100"
-                              }`}
-                            >
-                              {service.title}
-                            </button>
-                          ))}
+                          {services.map((service) => {
+                            const isActive =
+                              pathname === `/services/${service.slug}`;
+
+                            return (
+                              <button
+                                key={service.id}
+                                onClick={() =>
+                                  handleNav(`/services/${service.slug}`)
+                                }
+                                className={`block w-full text-left px-3 py-2 text-sm rounded-md transition ${
+                                  isActive
+                                    ? "bg-orange-500/10 text-orange-500"
+                                    : isDark
+                                    ? "text-gray-400 hover:text-white hover:bg-white/10"
+                                    : "text-gray-600 hover:text-indigo-600 hover:bg-gray-100"
+                                }`}
+                              >
+                                {service.title}
+                              </button>
+                            );
+                          })}
                         </div>
                       )}
-
                     </div>
                   ))}
                 </div>
 
-                {/* AUTH */}
+                {/* 🔥 CTA SECTION (MODERN STYLE) */}
                 {!loading && (
-                  <div className="mt-6 border-t pt-4 space-y-3">
-                    {!user ? (
-                      <>
-                        <button onClick={() => handleNav("/login")} className="w-full text-left px-4 py-2 rounded-lg hover:bg-indigo-500/10">
-                          Login
-                        </button>
-                        <button onClick={() => handleNav("/register")} className="w-full text-left px-4 py-2 rounded-lg hover:bg-indigo-500/10">
-                          Signup
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() =>
-                            handleNav(user.role === "admin" ? "/admin" : "/dashboard")
-                          }
-                          className="w-full text-left px-4 py-2 rounded-lg hover:bg-indigo-500/10"
-                        >
-                          {user.role === "admin" ? "Admin Dashboard" : "Dashboard"}
-                        </button>
+                  <div className="mt-6 border-t pt-5 space-y-3">
 
-                        <button
-                          onClick={handleLogout}
-                          className="w-full text-left px-4 py-2 rounded-lg text-red-500 hover:bg-red-500/10"
-                        >
-                          Logout
-                        </button>
-                      </>
+                    {/* CTA BUTTON */}
+                    <button
+                      onClick={() =>
+                        handleNav(
+                          !user
+                            ? "/login"
+                            : user.role === "admin"
+                            ? "/admin"
+                            : "/dashboard"
+                        )
+                      }
+                      className="w-full py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition"
+                    >
+                      {!user
+                        ? "Get Started"
+                        : user.role === "admin"
+                        ? "Admin Panel"
+                        : "Dashboard"}
+                    </button>
+
+                    {/* LOGOUT */}
+                    {user && (
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 rounded-lg text-red-500 hover:bg-red-500/10"
+                      >
+                        Logout
+                      </button>
                     )}
                   </div>
                 )}
