@@ -21,7 +21,7 @@ export default function Loader({ children }) {
     const timer = setTimeout(() => {
       setFadeOut(true); // start fade
       setTimeout(() => setLoading(false), 500); // remove after fade
-    }, 3000);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, []);
