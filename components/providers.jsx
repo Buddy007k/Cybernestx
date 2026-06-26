@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import PageTransition from "@/components/pageTransition";
-import Loader from "@/components/loader";
+// import Loader from "@/components/loader";
 import CursorGlow from "@/components/cursorGlow";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -15,9 +15,9 @@ export default function Providers({ children }) {
     >
       <AuthProvider>
         <CursorGlow />
-        <Loader>
+        {/* <Loader> */}
           <PageTransition>{children}</PageTransition>
-        </Loader>
+        {/* </Loader> */}
       </AuthProvider>
     </ThemeProvider>
   );
